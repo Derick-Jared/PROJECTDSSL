@@ -1,0 +1,20 @@
+const detalleventaRepository = require('../repositories/detalleventaRepository');
+
+class DetalleventaService{
+    getAllDetalleVentas(){
+        return detalleventaRepository.findAll();
+    }
+    getDetalleVentaById(id){
+        return detalleventaRepository.findById(id);
+    }
+    createDetalleVenta(detalleventaData){
+        return detalleventaRepository.create(detalleventaData);
+    }
+    updateDetalleVenta(id, detalleventaData){
+        return detalleventaRepository.update(id, detalleventaData);
+    }
+    deleteDetalleVenta(id){
+        return detalleventaRepository.delete(id);
+    }
+}
+module.exports=new DetalleventaService();
