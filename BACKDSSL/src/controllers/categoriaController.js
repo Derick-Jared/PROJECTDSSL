@@ -7,7 +7,6 @@ router.get('/',async(req,res)=>{
     res.json(categorias);
 });
 
-//router.get('/:id/:parametro') CON PARAMETRO
 router.get('/:id/',async(req,res)=>{
     const categoria=await categoriaService.getCategoriaById(req.params.id);
     if(categoria){
