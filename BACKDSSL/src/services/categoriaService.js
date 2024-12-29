@@ -1,4 +1,4 @@
-const categoriaRepository = require('../repositories/categoriaRepository');
+const categoriaRepository = require('../repositories/CategoriaRepository');
 
 class CategoriaService{
     getAllCategorias(){

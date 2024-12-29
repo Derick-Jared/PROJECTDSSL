@@ -1,7 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const helmet = require('helmet');
-const categoriaController=require('./controllers/categoriaController');
+const categoriaController = require('./controllers/CategoriaController');
 const productoController=require('./controllers/productoController');
 const detalleventaController=require('./controllers/detalleventaController');
 const ventaController=require('./controllers/ventaController');
