@@ -1,4 +1,4 @@
-const detalleventaRepository = require('../repositories/detalleventaRepository');
+const detalleventaRepository = require('../repositories/DetalleventaRepository');
 
 class DetalleventaService{
     getAllDetalleVentas(){

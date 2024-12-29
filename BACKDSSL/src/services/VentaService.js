@@ -1,4 +1,4 @@
-const ventaRepository = require('../repositories/ventaRepository');
+const ventaRepository = require('../repositories/VentaRepository');
 
 class VentaService{
     getAllVentas(){
