@@ -5,6 +5,7 @@ const categoriaController=require('./controllers/categoriaController');
 const productoController=require('./controllers/productoController');
 const detalleventaController=require('./controllers/detalleventaController');
 const ventaController=require('./controllers/ventaController');
+const usuarioController=require('./controllers/UsuarioController');
 const app =express();
 app.use(express.json());
 app.use(helmet());
@@ -24,6 +25,7 @@ app.use('/api/categorias',categoriaController);
 app.use('/api/productos',productoController);
 app.use('/api/detalleventas',detalleventaController);
 app.use('/api/ventas',ventaController);
+app.use('/api/usuario',usuarioController);
 const port=process.env.port || 3000;
 
 app.listen(port,()=>{
