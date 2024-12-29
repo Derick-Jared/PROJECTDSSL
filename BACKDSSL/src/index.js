@@ -7,6 +7,9 @@ const detalleventaController=require('./controllers/detalleventaController');
 const ventaController=require('./controllers/ventaController');
 const usuarioController=require('./controllers/UsuarioController');
 const tipoUsuarioController=require('./controllers/TipoUsuarioController');
+const personaController=require('./controllers/PersonaController');
+
+
 const app =express();
 app.use(express.json());
 app.use(helmet());
@@ -28,6 +31,9 @@ app.use('/api/detalleventas',detalleventaController);
 app.use('/api/ventas',ventaController);
 app.use('/api/usuario',usuarioController);
 app.use('/api/tipousuario',tipoUsuarioController);
+app.use('/api/persona',personaController);
+
+
 const port=process.env.port || 3000;
 
 app.listen(port,()=>{
