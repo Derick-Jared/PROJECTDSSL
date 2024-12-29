@@ -1,5 +1,5 @@
 const express = require('express');
-const ventaService=require('../services/ventaService');
+const ventaService=require('../services/VentaService');
 const router=express.Router();
 
 router.get('/',async(req,res)=>{
