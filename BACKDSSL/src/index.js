@@ -25,10 +25,10 @@ app.use((req, res,next) => {
     next();
 })
 
-app.use('/api/categorias',categoriaController);
-app.use('/api/productos',productoController);
-app.use('/api/detalleventas',detalleventaController);
-app.use('/api/ventas',ventaController);
+app.use('/api/categoria',categoriaController);
+app.use('/api/producto',productoController);
+app.use('/api/detalleventa',detalleventaController);
+app.use('/api/venta',ventaController);
 app.use('/api/usuario',usuarioController);
 app.use('/api/tipousuario',tipoUsuarioController);
 app.use('/api/persona',personaController);
