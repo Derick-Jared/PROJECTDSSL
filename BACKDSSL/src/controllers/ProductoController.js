@@ -37,4 +37,17 @@ router.delete('/:id',async(req,res)=>{
         res.status(404).json({message:'Producto dont delete'});
     }
 });
+
+router.get('/categoria/:categoriaId',async(req,res)=>{
+    try {
+        const result=await productoService.getProductosByCategoria(req.params.categoriaId);
+        res.json(result);
+    } catch (error) {
+        if(error,message==='Categoria not found'){ //=== : evalua tipo de dato
+            res.status(404).json({error:error.message});
+        }else{
+            res.status(500).json({error:error.message});
+        }
+    }
+});
 module.exports=router;
