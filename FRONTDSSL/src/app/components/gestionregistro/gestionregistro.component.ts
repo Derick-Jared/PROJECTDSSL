@@ -86,4 +86,13 @@ export class GestionregistroComponent implements OnInit {
   resetForm() {
     this.clienteForm.reset();
   }
+
+  deleteCliente(id:number){
+    const confirmacion = confirm("¿Estas seguro de eliminar el registro?");
+    if (confirmacion) {
+      this.personaServiceService.deletePerson(id).subscribe(() => {
+        this.loadPersons();
+      })
+    }
+  }
 }
