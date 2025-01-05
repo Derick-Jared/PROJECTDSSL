@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Usuario } from 'src/app/models/UsuarioModel';
 import { TipoUsuario } from 'src/app/models/TipoUsuarioModel';
 import { Persona } from 'src/app/models/PersonaModel';
-import { PersonaServiceService } from 'src/app/services/persona-service.service';
+import { PersonaService } from 'src/app/services/persona.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ClienteFormComponent} from '../gestionregistro/cliente-form/cliente-form.component'
 
@@ -18,7 +18,7 @@ export class GestionregistroComponent implements OnInit {
   clienteForm: FormGroup;
   currentUserId?: number;
   editMode: boolean = false;
-  constructor(private personaServiceService: PersonaServiceService, private fb: FormBuilder,private modalService: NgbModal){
+  constructor(private personaService: PersonaService, private fb: FormBuilder,private modalService: NgbModal){
     this.clienteForm = this.fb.group({
       id: [''],
       dni: [''],
@@ -36,7 +36,7 @@ export class GestionregistroComponent implements OnInit {
 
 
   loadPersons(){
-    this.personaServiceService.getPersons().subscribe( //subscribe:PARA RESPUESTAS ASINCRONAS
+    this.personaService.getPersons().subscribe( //subscribe:PARA RESPUESTAS ASINCRONAS
       (response)=>this.personas=response,
       (error)=>console.error("error en el loading",error)
     )
@@ -53,11 +53,11 @@ export class GestionregistroComponent implements OnInit {
     modalRef.result.then((result)=>{
       if(result){
         if(result.id){
-          this.personaServiceService.updatePerson(result.id, result).subscribe(() => {
+          this.personaService.updatePerson(result.id, result).subscribe(() => {
             this.loadPersons()              
           });
         }else{
-          this.personaServiceService.createPerson(result).subscribe(() => {
+          this.personaService.createPerson(result).subscribe(() => {
             this.loadPersons();            
           });
         }
@@ -69,12 +69,12 @@ export class GestionregistroComponent implements OnInit {
   onSubmit() {
     console.log("onSubmit", this.clienteForm.value);
     if (this.editMode && this.currentUserId) {
-      this.personaServiceService.updatePerson(this.currentUserId, this.clienteForm.value).subscribe(() => {
+      this.personaService.updatePerson(this.currentUserId, this.clienteForm.value).subscribe(() => {
         this.loadPersons()
         this.resetForm();
         })
     }else {
-      this.personaServiceService.createPerson(this.clienteForm.value).subscribe(() => {
+      this.personaService.createPerson(this.clienteForm.value).subscribe(() => {
         this.loadPersons();
         this.resetForm();
       })

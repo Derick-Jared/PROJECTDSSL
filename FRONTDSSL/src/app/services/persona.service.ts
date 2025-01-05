@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
-export class PersonaServiceService {
+export class PersonaService {
   private apiUrl: string = 'http://localhost:3000/api/persona';
 
   constructor( private http: HttpClient) { }

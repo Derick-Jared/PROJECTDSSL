@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Persona } from'src/app/models/PersonaModel';
-import { PersonaServiceService } from'src/app/services/persona-service.service';
 
 @Component({
   selector: 'app-cliente-form',
