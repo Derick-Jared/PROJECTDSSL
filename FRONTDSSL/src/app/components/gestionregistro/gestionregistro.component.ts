@@ -5,7 +5,7 @@ import { TipoUsuario } from 'src/app/models/TipoUsuarioModel';
 import { Persona } from 'src/app/models/PersonaModel';
 import { PersonaServiceService } from 'src/app/services/persona-service.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ClienteFormComponent} from '../gestionregistro/cliente-form/cliente-form.component'
+import { ClienteFormComponent } from '../gestionregistro/cliente-form/cliente-form.component'
 
 @Component({
   selector: 'app-gestionregistro',
@@ -14,11 +14,11 @@ import { ClienteFormComponent} from '../gestionregistro/cliente-form/cliente-for
 })
 export class GestionregistroComponent implements OnInit {
   @ViewChild('clienteModal') clienteModal?: ClienteFormComponent;
-  personas: Persona[]= [];
+  personas: Persona[] = [];
   clienteForm: FormGroup;
   currentUserId?: number;
   editMode: boolean = false;
-  constructor(private personaServiceService: PersonaServiceService, private fb: FormBuilder,private modalService: NgbModal){
+  constructor(private personaServiceService: PersonaServiceService, private fb: FormBuilder, private modalService: NgbModal) {
     this.clienteForm = this.fb.group({
       id: [''],
       dni: [''],
@@ -35,30 +35,30 @@ export class GestionregistroComponent implements OnInit {
   }
 
 
-  loadPersons(){
+  loadPersons() {
     this.personaServiceService.getPersons().subscribe( //subscribe:PARA RESPUESTAS ASINCRONAS
-      (response)=>this.personas=response,
-      (error)=>console.error("error en el loading",error)
+      (response) => this.personas = response,
+      (error) => console.error("error en el loading", error)
     )
 
   }
 
-  openModalCliente(persona?: Persona){
+  openModalCliente(cliente?: Persona) {
     const modalRef = this.modalService.open(ClienteFormComponent);
-    if(persona){
-      modalRef.componentInstance.persona = {...persona};
+    if (cliente) {
+      modalRef.componentInstance.cliente = cliente;
       modalRef.componentInstance.isEditMode = true;
     }
 
-    modalRef.result.then((result)=>{
-      if(result){
-        if(result.id){
+    modalRef.result.then((result) => {
+      if (result) {
+        if (result.id) {
           this.personaServiceService.updatePerson(result.id, result).subscribe(() => {
-            this.loadPersons()              
+            this.loadPersons()
           });
-        }else{
+        } else {
           this.personaServiceService.createPerson(result).subscribe(() => {
-            this.loadPersons();            
+            this.loadPersons();
           });
         }
       }
@@ -69,11 +69,12 @@ export class GestionregistroComponent implements OnInit {
   onSubmit() {
     console.log("onSubmit", this.clienteForm.value);
     if (this.editMode && this.currentUserId) {
+      console.log("Entro aca?");
       this.personaServiceService.updatePerson(this.currentUserId, this.clienteForm.value).subscribe(() => {
         this.loadPersons()
         this.resetForm();
-        })
-    }else {
+      })
+    } else {
       this.personaServiceService.createPerson(this.clienteForm.value).subscribe(() => {
         this.loadPersons();
         this.resetForm();
