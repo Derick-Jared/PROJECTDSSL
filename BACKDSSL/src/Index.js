@@ -2,9 +2,9 @@ require('dotenv').config();
 const express = require('express');
 const helmet = require('helmet');
 const categoriaController = require('./controllers/CategoriaController');
-const productoController=require('./controllers/productoController');
-const detalleventaController=require('./controllers/detalleventaController');
-const ventaController=require('./controllers/ventaController');
+const productoController=require('./controllers/ProductoController');
+const detalleventaController=require('./controllers/DetalleVentaController');
+const ventaController=require('./controllers/VentaController');
 const usuarioController=require('./controllers/UsuarioController');
 const tipoUsuarioController=require('./controllers/TipoUsuarioController');
 const personaController=require('./controllers/PersonaController');
@@ -25,10 +25,10 @@ app.use((req, res,next) => {
     next();
 })
 
-app.use('/api/categorias',categoriaController);
-app.use('/api/productos',productoController);
-app.use('/api/detalleventas',detalleventaController);
-app.use('/api/ventas',ventaController);
+app.use('/api/categoria',categoriaController);
+app.use('/api/producto',productoController);
+app.use('/api/detalleventa',detalleventaController);
+app.use('/api/venta',ventaController);
 app.use('/api/usuario',usuarioController);
 app.use('/api/tipousuario',tipoUsuarioController);
 app.use('/api/persona',personaController);
