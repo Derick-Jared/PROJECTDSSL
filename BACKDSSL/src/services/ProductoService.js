@@ -16,5 +16,21 @@ class ProductoService{
     deleteProducto(id){
         return productoRepository.delete(id);
     }
+
+    async getProductosByCategoria(categoriaId){
+        const categoria=await productoRepository.findById(categoriaId);
+        if(!categoria){
+            throw new Error('Categoria not found');
+            return;
+        }
+        const products=await productoRepository.findProductosByIdCategoria(categoriaId);
+        const productobycategoria={
+            data:{
+                ...categoria,
+                productos:products
+            }
+        }
+        return productobycategoria;
+    }
 }
 module.exports=new ProductoService();

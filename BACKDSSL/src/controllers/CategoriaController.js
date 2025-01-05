@@ -37,4 +37,5 @@ router.delete('/:id',async(req,res)=>{
         res.status(404).json({message:'Categoria dont delete'});
     }
 });
+
 module.exports=router;

@@ -7,21 +7,24 @@ import { GestionregistroComponent } from './components/gestionregistro/gestionre
 
 import { HttpClientModule } from '@angular/common/http';
 import { ClienteFormComponent } from './components/gestionregistro/cliente-form/cliente-form.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { GestionventasComponent } from './components/gestionventas/gestionventas.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     GestionregistroComponent,
-    ClienteFormComponent
+    ClienteFormComponent,
+    GestionventasComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
-    NgbModule
+    NgbModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
