@@ -9,7 +9,7 @@ import { Categoria } from '../models/CategoriaModel';
 export class CategoriaproductoService {
 
   private apiUrl: string = 'http://localhost:3000/api/categoria';
-  
+
     constructor( private http: HttpClient) { }
   
     getCategorias(): Observable<Categoria[]> {

@@ -123,7 +123,7 @@
             <hr>
             <ul class="nav nav-pills flex-column mb-auto">
                 <li class="nav-item">
-                    <a href="#" class="nav-link active" aria-current="page">
+                    <a href="#" class="nav-link text-white" >
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                             class="bi bi-person" viewBox="0 0 16 16">
                             <path
@@ -133,7 +133,7 @@
                     </a>
                 </li>
                 <li>
-                    <a routerLink="/gestioncategoria" class="nav-link text-white">
+                    <a routerLink="/gestioncategoria" class="nav-link text-white active">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                             class="bi bi-tags-fill" viewBox="0 0 16 16">
                             <path
@@ -198,45 +198,35 @@
             </div>
         </div>
         <div class="container">
-            <h1 class="text-center mb-4">Gestión de Registro</h1>
-            <h3 class="mb-3">Listado de Clientes</h3>
-            <button type="button" class="btn btn-primary" (click)="openModalCliente()">
+            <h1 class="text-center mb-4">Gestión de Categoria de Productos</h1>
+            <h3 class="mb-3">Listado de Categoria de Productos</h3>
+            <button type="button" class="btn btn-primary" (click)="openModalCategoria()">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
                     <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z" />
                 </svg>
-                Agregar un Cliente
+                Agregar una Categoria
             </button>
             <table class="table table-striped table-bordered">
                 <thead class="table-dark">
                     <tr>
                         <th scope="col">ID</th>
-                        <th scope="col">DNI</th>
                         <th scope="col">Nombres</th>
-                        <th scope="col">Apellidos</th>
-                        <th scope="col">Dirección</th>
-                        <th scope="col">Teléfono</th>
-                        <th scope="col">Email</th>
                         <th scope="col">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let persona of personas">
-                        <th scope="col">{{persona.id}}</th>
-                        <th scope="col">{{persona.dni}}</th>
-                        <th scope="col">{{persona.nombres}}</th>
-                        <th scope="col">{{persona.apellidos}}</th>
-                        <th scope="col">{{persona.direccion}}</th>
-                        <th scope="col">{{persona.telefono}}</th>
-                        <th scope="col">{{persona.email}}</th>
+                    <tr *ngFor="let categoria of categorias">
+                        <th scope="col">{{categoria.id}}</th>
+                        <th scope="col">{{categoria.nombre}}</th>
                         <th scope="col">
-                            <button type="button" class="btn btn-warning me-2" (click)="openModalCliente(persona)">
+                            <button type="button" class="btn btn-warning me-2" (click)="openModalCategoria(categoria)">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                     class="bi bi-pencil" viewBox="0 0 16 16">
                                     <path
                                         d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325" />
                                 </svg>
                             </button>
-                            <button type="button" class="btn btn-danger" (click)="deleteCliente(persona.id)">
+                            <button type="button" class="btn btn-danger" (click)="deleteCategoria(categoria.id)">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                     class="bi bi-trash-fill" viewBox="0 0 16 16">
                                     <path
