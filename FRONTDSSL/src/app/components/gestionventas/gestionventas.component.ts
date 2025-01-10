@@ -29,10 +29,11 @@ export class GestionventasComponent {
 
   constructor(private productoService: ProductoService,private categoriaService: CategoriaService,private personaService: PersonaService){
     const hoy = new Date();
-    // Convertir la fecha a GMT-5 (hora de Perú)
-    const offsetHoraPeru = hoy.getTime() - hoy.getTimezoneOffset() * 60000 - 5 * 3600000;
-    const fechaPeru = new Date(offsetHoraPeru);
-    this.fechaActual = fechaPeru.toISOString().split('T')[0]; // Formato 'YYYY-MM-DD'
+    // Obtener la fecha en formato 'YYYY-MM-DD'
+    const año = hoy.getFullYear();
+    const mes = (hoy.getMonth() + 1).toString().padStart(2, '0'); // Mes de 0-11, sumamos 1
+    const dia = hoy.getDate().toString().padStart(2, '0'); // Día
+    this.fechaActual = `${año}-${mes}-${dia}`;
   }
 
   ngOnInit(): void {
