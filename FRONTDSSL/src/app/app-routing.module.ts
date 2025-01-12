@@ -9,7 +9,7 @@ const routes: Routes = [
     {path:'gestionregistro',component:GestionregistroComponent},
     {path:'gestioncategoria', component: GestioncategoriaComponent },
     {path:'gestionventas',component:GestionventasComponent}, //NOMBRE A LLAMAR EN LA URL
-    {path:'',redirectTo:'/gestionregistro',pathMatch:'full'} 
+    {path:'',redirectTo:'/gestionventas',pathMatch:'full'} 
 ];
 
 @NgModule({
