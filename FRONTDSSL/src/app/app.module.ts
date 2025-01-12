@@ -9,13 +9,19 @@ import { HttpClientModule } from '@angular/common/http';
 import { ClienteFormComponent } from './components/gestionregistro/cliente-form/cliente-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { GestioncategoriaComponent } from './components/gestioncategoria/gestioncategoria.component';
+import { CategoriaFormComponent } from './components/gestioncategoria/categoria-form/categoria-form.component';
 import { GestionventasComponent } from './components/gestionventas/gestionventas.component';
+
+// import { Categoria } from './models/CategoriaModel';
 
 @NgModule({
   declarations: [
     AppComponent,
     GestionregistroComponent,
     ClienteFormComponent,
+    GestioncategoriaComponent,
+    CategoriaFormComponent,
     GestionventasComponent
   ],
   imports: [
