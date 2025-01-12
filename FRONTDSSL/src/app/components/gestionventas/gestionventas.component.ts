@@ -39,6 +39,7 @@ export class GestionventasComponent {
   ngOnInit(): void {
     this.loadProducts();
     this.loadCategories();
+    this.loadPersons();
   }
 
   loadProducts(){
@@ -61,6 +62,7 @@ export class GestionventasComponent {
       (data) => {
         this.clientes = data;
         this.clientesFiltrados = data; // Inicialmente mostramos todos los clientes
+        console.log('Clientes cargados:', this.clientes); // Debugging
       },
       (error) => console.error('Error al cargar los clientes:', error)
     );
@@ -86,15 +88,33 @@ onNombreChange(event: Event): void {
   this.applyFilters();  // Aplicar ambos filtros (nombre y categoría)
 }
 
-onClienteChange(event: Event): void {
-  this.dniBusqueda = (event.target as HTMLInputElement).value;
-  this.applyFilters();  // Aplicar ambos filtros (nombre y categoría)
+
+
+clienteSeleccionado: Persona | null = null;
+
+buscarCliente(): void {
+  const dniNormalizado = this.dniBusqueda.trim().toLowerCase();
+  if (!dniNormalizado) {
+    this.clienteSeleccionado = null;
+    alert('Por favor, ingrese un DNI para buscar.');
+    return;
+  }
+
+  const cliente = this.clientes.find(
+    (c) => c.dni.trim().toLowerCase() === dniNormalizado
+  );
+
+  this.clienteSeleccionado = cliente || null;
+
+  if (!cliente) {
+    alert('No se encontró ningún cliente con el DNI ingresado.');
+  }
 }
+
 
 // Filtrar productos por nombre y categoría seleccionada
 applyFilters(): void {
   let productosFiltrados = this.productos;
-  let clientesFiltrados = this.clientes;
 
   // Filtrar por nombre
   if (this.nombreBusqueda.trim()) {
@@ -110,18 +130,10 @@ applyFilters(): void {
     );
   }
 
-  // Filtrar por DNI
-  if (this.dniBusqueda.trim()) {
-    clientesFiltrados = clientesFiltrados.filter(cliente =>
-      cliente.dni.toLowerCase().includes(this.dniBusqueda.toLowerCase())
-    );
-  }
 
   // Actualizar la lista de productos filtrados
   this.productosFiltrados = productosFiltrados;
 
-  // Actualizar la lista de clientes filtrados
-  this.clientesFiltrados = clientesFiltrados;
   }
 
   seleccionarProducto(producto: Producto): void {
