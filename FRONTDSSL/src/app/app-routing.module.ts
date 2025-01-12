@@ -4,11 +4,13 @@ import { GestionregistroComponent } from "./components/gestionregistro/gestionre
 import { GestionventasComponent } from './components/gestionventas/gestionventas.component';
 
 import { GestioncategoriaComponent } from "./components/gestioncategoria/gestioncategoria.component"
+import { LoginComponent } from './components/login/login.component';
 
 const routes: Routes = [
     {path:'gestionregistro',component:GestionregistroComponent},
     {path:'gestioncategoria', component: GestioncategoriaComponent },
     {path:'gestionventas',component:GestionventasComponent}, //NOMBRE A LLAMAR EN LA URL
+    {path:'login',component:LoginComponent},
     {path:'',redirectTo:'/gestionventas',pathMatch:'full'} 
 ];
 

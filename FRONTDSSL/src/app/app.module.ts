@@ -12,6 +12,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { GestioncategoriaComponent } from './components/gestioncategoria/gestioncategoria.component';
 import { CategoriaFormComponent } from './components/gestioncategoria/categoria-form/categoria-form.component';
 import { GestionventasComponent } from './components/gestionventas/gestionventas.component';
+import { LoginComponent } from './components/login/login.component';
 
 // import { Categoria } from './models/CategoriaModel';
 
@@ -22,7 +23,8 @@ import { GestionventasComponent } from './components/gestionventas/gestionventas
     ClienteFormComponent,
     GestioncategoriaComponent,
     CategoriaFormComponent,
-    GestionventasComponent
+    GestionventasComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

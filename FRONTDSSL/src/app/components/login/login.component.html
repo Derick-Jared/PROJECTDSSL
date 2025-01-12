@@ -1,0 +1,28 @@
+<script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="sidebars.js"></script>
+
+<div class="d-flex justify-content-center align-items-center min-vh-100">
+  <div class="login-container p-5 border rounded shadow-sm" style="max-width: 600px; width: 100%;">
+    <h2 class="text-center mb-5">Iniciar sesión</h2>
+    <form (ngSubmit)="onSubmit()" [formGroup]="loginForm">
+      <div class="input-group mb-4">
+        <label for="username" class="form-label fs-5">Usuario:</label>
+        <input id="username" formControlName="username" type="text" class="form-control fs-4" />
+        <div *ngIf="username?.invalid && username?.touched" class="error-message">
+          El usuario es obligatorio
+        </div>
+      </div>
+
+      <div class="input-group mb-4">
+        <label for="password" class="form-label fs-5">Contraseña:</label>
+        <input id="password" formControlName="password" type="password" class="form-control fs-4" />
+        <div *ngIf="password?.invalid && password?.touched" class="error-message">
+          La contraseña es obligatoria y debe tener al menos 6 caracteres
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary w-100 fs-4" [disabled]="loginForm.invalid">Iniciar sesión</button>
+    </form>
+  </div>
+</div>
