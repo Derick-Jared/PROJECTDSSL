@@ -46,9 +46,10 @@ export class GestionregistroComponent implements OnInit {
     */
 
   loadClientes(): void {
-    this.personaService.getClients().subscribe((data) => {
-      this.clientes = data;
-    });
+    this.personaService.getClients().subscribe( //subscribe:PARA RESPUESTAS ASINCRONAS
+      (response)=>this.clientes=response,
+      (error)=>console.error("error en el loading",error)
+    )
   }
 
   openModalCliente(persona?: Persona){

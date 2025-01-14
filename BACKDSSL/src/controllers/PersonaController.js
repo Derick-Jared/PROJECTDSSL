@@ -6,12 +6,12 @@ router.get('/clientes', async (req, res) => {
     const client = await personaService.getAllClients();
     res.json(client);
 });
-
+/*
 router.get('/personal', async (req, res) => {
   const staff = await personaService.getAllStaff();
   res.json(staff);
 });
-
+*/
 router.get('/',async(req,res)=>{
     const person=await personaService.getAllPersons();
     res.json(person);

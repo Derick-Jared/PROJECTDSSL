@@ -19,8 +19,10 @@ class PersonaService{
     getAllClients(){
         return personaRepository.findAllClients();
     }
+    /*
     getAllStaff(){
         return personaRepository.findAllStaff();
     }
+        */
 }
 module.exports=new PersonaService();

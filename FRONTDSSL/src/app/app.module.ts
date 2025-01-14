@@ -13,6 +13,7 @@ import { GestioncategoriaComponent } from './components/gestioncategoria/gestion
 import { CategoriaFormComponent } from './components/gestioncategoria/categoria-form/categoria-form.component';
 import { GestionventasComponent } from './components/gestionventas/gestionventas.component';
 import { LoginComponent } from './components/login/login.component';
+import { GestionusuarioComponent } from './components/gestionusuario/gestionusuario.component';
 
 // import { Categoria } from './models/CategoriaModel';
 
@@ -24,7 +25,8 @@ import { LoginComponent } from './components/login/login.component';
     GestioncategoriaComponent,
     CategoriaFormComponent,
     GestionventasComponent,
-    LoginComponent
+    LoginComponent,
+    GestionusuarioComponent
   ],
   imports: [
     BrowserModule,
