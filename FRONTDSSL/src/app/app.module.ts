@@ -15,6 +15,7 @@ import { GestionventasComponent } from './components/gestionventas/gestionventas
 import { LoginComponent } from './components/login/login.component';
 import { GestionusuarioComponent } from './components/gestionusuario/gestionusuario.component';
 
+
 // import { Categoria } from './models/CategoriaModel';
 
 @NgModule({

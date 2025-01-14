@@ -6,6 +6,7 @@ import { GestionventasComponent } from './components/gestionventas/gestionventas
 import { GestioncategoriaComponent } from "./components/gestioncategoria/gestioncategoria.component"
 import { LoginComponent } from './components/login/login.component';
 import { GestionusuarioComponent } from './components/gestionusuario/gestionusuario.component';
+import { IndexComponent } from './components/index/index.component';
 
 const routes: Routes = [
     {path:'gestionregistro',component:GestionregistroComponent},
@@ -13,7 +14,8 @@ const routes: Routes = [
     {path:'gestionventas',component:GestionventasComponent}, //NOMBRE A LLAMAR EN LA URL
     {path:'gestionusuario',component:GestionusuarioComponent},
     {path:'login',component:LoginComponent},
-    {path:'',redirectTo:'/gestionventas',pathMatch:'full'} 
+    {path:'index',component:IndexComponent},
+    {path:'',redirectTo:'/index',pathMatch:'full'}
 ];
 
 @NgModule({
