@@ -18,6 +18,7 @@ export class GestioncategoriaComponent implements OnInit {
   categoriaForm: FormGroup;
   currentUserId?: number;
   editMode: boolean = false;
+  activeTab: string = 'categorias';
 
   constructor(private categoriaproductoService :CategoriaproductoService , private fb: FormBuilder, private modalService: NgbModal){
     this.categoriaForm = this.fb.group({
@@ -91,4 +92,17 @@ export class GestioncategoriaComponent implements OnInit {
       }
     }
 
+    setActiveTab(tab: string) {
+      this.activeTab = tab;
+    }
+
+    restoreCategoria(id: number) {
+      const categoria = this.categorias.find(c => c.id === id);
+      const confirmacion = confirm("¿Estas seguro de habilitar el registro?");
+      if (confirmacion) {
+        this.categoriaproductoService.restoreCategoria(id).subscribe(() => {
+          this.loadCategorias();
+        })
+      }
+    }
 }

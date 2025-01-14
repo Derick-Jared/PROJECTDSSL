@@ -37,7 +37,12 @@ class CrudRepository {
     }
 
     async delete(id) {
-        const [result] = await pool.query(`DELETE FROM ${this.tableName} WHERE id=?`, [id]);
+        const [result] = await pool.query(`UPDATE ${this.tableName} SET estado=0 WHERE id=?`, [id]);
+        return result.affectedRows > 0;
+    }
+
+    async restore(id) {
+        const [result] = await pool.query(`UPDATE ${this.tableName} SET estado=1 WHERE id=?`, [id]);
         return result.affectedRows > 0;
     }
 }

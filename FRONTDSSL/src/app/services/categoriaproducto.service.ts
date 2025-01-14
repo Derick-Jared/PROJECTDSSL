@@ -32,5 +32,7 @@ export class CategoriaproductoService {
       return this.http.delete(`${this.apiUrl}/${id}`);
     }
 
-
+    restoreCategoria(id: number): Observable<any> {
+      return this.http.put(`${this.apiUrl}/restore/${id}`, {});
+    }
 }

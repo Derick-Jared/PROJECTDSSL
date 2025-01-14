@@ -17,7 +17,8 @@ export class CategoriaFormComponent implements OnInit {
   ngOnInit(): void {
     this.categoriaForm = this.fb.group({
       id: [this.categoria?.id],
-      nombre: [this.categoria?.nombre || '', Validators.required]
+      nombre: [this.categoria?.nombre || '', Validators.required],
+      estado: '1'
     })
   }
 

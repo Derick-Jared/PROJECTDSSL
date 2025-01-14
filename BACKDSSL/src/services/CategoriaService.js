@@ -16,5 +16,8 @@ class CategoriaService{
     deleteCategoria(id){
         return categoriaRepository.delete(id);
     }
+    restoreCategoria(id){
+        return categoriaRepository.restore(id);
+    }
 }
 module.exports=new CategoriaService();
