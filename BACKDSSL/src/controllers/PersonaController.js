@@ -2,6 +2,16 @@ const express = require('express');
 const personaService =require('../services/PersonaService');
 const router=express.Router();
 
+router.get('/clientes', async (req, res) => {
+    const client = await personaService.getAllClients();
+    res.json(client);
+});
+
+router.get('/personal', async (req, res) => {
+  const staff = await personaService.getAllStaff();
+  res.json(staff);
+});
+
 router.get('/',async(req,res)=>{
     const person=await personaService.getAllPersons();
     res.json(person);
@@ -37,4 +47,5 @@ router.delete('/:id',async(req,res)=>{
         res.status(404).json({message:'Usuario dont delete'});
     }
 });
+
 module.exports=router;

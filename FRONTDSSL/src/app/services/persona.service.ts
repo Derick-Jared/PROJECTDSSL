@@ -32,4 +32,11 @@ export class PersonaService {
     return this.http.delete(`${this.apiUrl}/${id}`);
   }
 
+  getClients(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/clientes`);
+  }
+
+  getStaff(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/personal`);
+  }
 }

@@ -232,16 +232,16 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let persona of personas">
-                        <th scope="col">{{persona.id}}</th>
-                        <th scope="col">{{persona.dni}}</th>
-                        <th scope="col">{{persona.nombres}}</th>
-                        <th scope="col">{{persona.apellidos}}</th>
-                        <th scope="col">{{persona.direccion}}</th>
-                        <th scope="col">{{persona.telefono}}</th>
-                        <th scope="col">{{persona.email}}</th>
+                    <tr *ngFor="let cliente of clientes">
+                        <th scope="col">{{cliente.id}}</th>
+                        <th scope="col">{{cliente.dni}}</th>
+                        <th scope="col">{{cliente.nombres}}</th>
+                        <th scope="col">{{cliente.apellidos}}</th>
+                        <th scope="col">{{cliente.direccion}}</th>
+                        <th scope="col">{{cliente.telefono}}</th>
+                        <th scope="col">{{cliente.email}}</th>
                         <th scope="col">
-                            <button type="button" class="btn btn-warning me-2" (click)="openModalCliente(persona)">
+                            <button type="button" class="btn btn-warning me-2" (click)="openModalCliente(cliente)">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                     class="bi bi-pencil" viewBox="0 0 16 16">
                                     <path

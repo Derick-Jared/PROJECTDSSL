@@ -16,6 +16,7 @@ export class GestionregistroComponent implements OnInit {
   @ViewChild('clienteModal') clienteModal?: ClienteFormComponent;
   personas: Persona[]= [];
   clienteForm: FormGroup;
+  clientes: any[] = [];
   currentUserId?: number;
   editMode: boolean = false;
   constructor(private personaService: PersonaService, private fb: FormBuilder,private modalService: NgbModal){
@@ -31,16 +32,23 @@ export class GestionregistroComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadPersons();
+    //this.loadPersons();
+    this.loadClientes();
   }
 
-
+/*
   loadPersons(){
     this.personaService.getPersons().subscribe( //subscribe:PARA RESPUESTAS ASINCRONAS
       (response)=>this.personas=response,
       (error)=>console.error("error en el loading",error)
     )
+  }
+    */
 
+  loadClientes(): void {
+    this.personaService.getClients().subscribe((data) => {
+      this.clientes = data;
+    });
   }
 
   openModalCliente(persona?: Persona){
@@ -54,11 +62,11 @@ export class GestionregistroComponent implements OnInit {
       if(result){
         if(result.id){
           this.personaService.updatePerson(result.id, result).subscribe(() => {
-            this.loadPersons()              
+            this.loadClientes(); //     this.loadPersons()         
           });
         }else{
           this.personaService.createPerson(result).subscribe(() => {
-            this.loadPersons();            
+            this.loadClientes();    //     this.loadPersons()         
           });
         }
       }
@@ -70,12 +78,12 @@ export class GestionregistroComponent implements OnInit {
     console.log("onSubmit", this.clienteForm.value);
     if (this.editMode && this.currentUserId) {
       this.personaService.updatePerson(this.currentUserId, this.clienteForm.value).subscribe(() => {
-        this.loadPersons()
+        this.loadClientes(); //     this.loadPersons() 
         this.resetForm();
         })
     }else {
       this.personaService.createPerson(this.clienteForm.value).subscribe(() => {
-        this.loadPersons();
+        this.loadClientes(); //     this.loadPersons() 
         this.resetForm();
       })
     }
