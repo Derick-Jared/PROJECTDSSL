@@ -48,15 +48,17 @@ class CrudRepository {
 
     async findAllClients() {
         const [result] = await pool.query(`SELECT p.id,p.nombres,p.apellidos,p.direccion,p.telefono,p.email FROM persona p
-            LEFT JOIN usuario u ON p.id = u.id_persona
+            INNER JOIN usuario u ON p.id = u.id_persona
             WHERE u.id IS NULL`);
         return result;
     }
 
+    /*
     async findAllUsers() {
         const [result] = await pool.query(`SELECT u.id,username,p.id,p.nombres,p.apellidos,p.direccion,p.telefono,p.email FROM usuario u
             INNER JOIN persona p ON u.id_persona = p.id`);
         return result;
     }
+        */
 }
 module.exports = CrudRepository;

@@ -22,11 +22,15 @@ router.post('/',async(req,res)=>{
 });
 
 router.put('/:id',async(req,res)=>{
-    const updateProducto=await productoService.updateProducto(req.params.id,req.body);
-    if(updateProducto)
-        res.status(201).json(updateProducto);
-    else
-    res.status(404).json({message:'Producto not updated'});
+    const productoId = req.params.id;
+  const productoData = req.body;
+
+  try {
+    const productoActualizado = await productoService.updateProducto(productoId, productoData);
+    res.status(200).json(productoActualizado);
+  } catch (error) {
+    res.status(500).json({ message: 'Error al actualizar el producto', error });
+  }
 });
 
 router.delete('/:id',async(req,res)=>{

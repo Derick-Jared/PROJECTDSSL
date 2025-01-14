@@ -18,5 +18,9 @@ export class ProductoService {
   getProductsByIdCategory(categoriaId: number): Observable<Producto[]> {
     const url = `${this.apiUrl}/categoria/${categoriaId}`;
     return this.http.get<Producto[]>(url);
-}
+  }
+
+  updateProducto(model: Producto): Observable<Producto> {
+    return this.http.put<Producto>(`${this.apiUrl}/${model.id}`, model);
+  }
 }

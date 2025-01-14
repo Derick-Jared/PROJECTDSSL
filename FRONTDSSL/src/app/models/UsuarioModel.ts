@@ -5,5 +5,4 @@ export interface Usuario{
     estado: string;
     id_tipousuario: number;
     id_persona: number;
-
 }

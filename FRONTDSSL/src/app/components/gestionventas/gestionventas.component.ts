@@ -5,6 +5,11 @@ import { Producto } from 'src/app/models/ProductoModel';
 import { CategoriaService } from 'src/app/services/categoria.service';
 import { PersonaService } from 'src/app/services/persona.service';
 import { ProductoService } from 'src/app/services/producto.service';
+import jsPDF from 'jspdf';
+import { VentaService } from 'src/app/services/venta.service';
+import { Venta } from 'src/app/models/VentaModel';
+import { DetalleVenta } from 'src/app/models/DetalleVentaModel';
+import { DetalleventaService } from 'src/app/services/detalleventa.service';
 
 
 @Component({
@@ -15,19 +20,20 @@ import { ProductoService } from 'src/app/services/producto.service';
 export class GestionventasComponent {
   productos: Producto[] = [];
   productosFiltrados: Producto[] = [];
-  clientes:Persona[] = [];
+  clientes: Persona[] = [];
   clientesFiltrados: Persona[] = [];
-  categorias: Categoria[]= [];
+  categorias: Categoria[] = [];
   selectedCategoria: number = 0;  // Categoria seleccionada por el usuario
   nombreBusqueda: string = '';  // Campo para búsqueda por nombre
-  dniBusqueda: string = ''; 
+  dniBusqueda: string = '';
   carrito: any[] = [];
   productoSeleccionado: Producto | null = null;
   productoSeleccionadoIndex: number | null = null;  // Índice del producto seleccionado en el carrito
   montoPago: number = 0;
   fechaActual: string;
 
-  constructor(private productoService: ProductoService,private categoriaService: CategoriaService,private personaService: PersonaService){
+  constructor(private productoService: ProductoService, private categoriaService: CategoriaService, private personaService: PersonaService,
+    private ventaService: VentaService, private detalleventaService: DetalleventaService) {
     const hoy = new Date();
     // Obtener la fecha en formato 'YYYY-MM-DD'
     const año = hoy.getFullYear();
@@ -42,18 +48,18 @@ export class GestionventasComponent {
     this.loadPersons();
   }
 
-  loadProducts(){
+  loadProducts() {
     this.productoService.getProducts().subscribe(
       (response) => {
         this.productos = response;
         this.productosFiltrados = response; // Inicialmente, mostramos todos los productos
-      },(error) => console.error('Error al cargar productos', error));
+      }, (error) => console.error('Error al cargar productos', error));
   }
 
-  loadCategories(){
+  loadCategories() {
     this.categoriaService.getCategories().subscribe( //subscribe:PARA RESPUESTAS ASINCRONAS
-      (response)=>this.categorias=response,
-      (error)=>console.error("error en el loading product",error)
+      (response) => this.categorias = response,
+      (error) => console.error("error en el loading product", error)
     )
   }
 
@@ -72,67 +78,67 @@ export class GestionventasComponent {
     const cat = this.categorias.find(c => c.id === id_categoria);
     return cat ? cat.nombre : 'Sin Categoria';
   }
-  
-
- // Al cambiar la categoría en el combo box
- onCategoriaChange(event: Event): void {
-  const target = event.target as HTMLSelectElement;
-  const selectedCategoriaId = Number(target.value);
-  this.selectedCategoria = selectedCategoriaId;
-  this.applyFilters();  // Aplicar ambos filtros (nombre y categoría)
-}
-
-// Al cambiar el nombre en el campo de búsqueda
-onNombreChange(event: Event): void {
-  this.nombreBusqueda = (event.target as HTMLInputElement).value;
-  this.applyFilters();  // Aplicar ambos filtros (nombre y categoría)
-}
 
 
-
-clienteSeleccionado: Persona | null = null;
-
-buscarCliente(): void {
-  const dniNormalizado = this.dniBusqueda.trim().toLowerCase();
-  if (!dniNormalizado) {
-    this.clienteSeleccionado = null;
-    alert('Por favor, ingrese un DNI para buscar.');
-    return;
+  // Al cambiar la categoría en el combo box
+  onCategoriaChange(event: Event): void {
+    const target = event.target as HTMLSelectElement;
+    const selectedCategoriaId = Number(target.value);
+    this.selectedCategoria = selectedCategoriaId;
+    this.applyFilters();  // Aplicar ambos filtros (nombre y categoría)
   }
 
-  const cliente = this.clientes.find(
-    (c) => c.dni.trim().toLowerCase() === dniNormalizado
-  );
-
-  this.clienteSeleccionado = cliente || null;
-
-  if (!cliente) {
-    alert('No se encontró ningún cliente con el DNI ingresado.');
+  // Al cambiar el nombre en el campo de búsqueda
+  onNombreChange(event: Event): void {
+    this.nombreBusqueda = (event.target as HTMLInputElement).value;
+    this.applyFilters();  // Aplicar ambos filtros (nombre y categoría)
   }
-}
 
 
-// Filtrar productos por nombre y categoría seleccionada
-applyFilters(): void {
-  let productosFiltrados = this.productos;
 
-  // Filtrar por nombre
-  if (this.nombreBusqueda.trim()) {
-    productosFiltrados = productosFiltrados.filter(producto =>
-      producto.nombre.toLowerCase().includes(this.nombreBusqueda.toLowerCase())
+  clienteSeleccionado: Persona | null = null;
+
+  buscarCliente(): void {
+    const dniNormalizado = this.dniBusqueda.trim().toLowerCase();
+    if (!dniNormalizado) {
+      this.clienteSeleccionado = null;
+      alert('Por favor, ingrese un DNI para buscar.');
+      return;
+    }
+
+    const cliente = this.clientes.find(
+      (c) => c.dni.trim().toLowerCase() === dniNormalizado
     );
+
+    this.clienteSeleccionado = cliente || null;
+
+    if (!cliente) {
+      alert('No se encontró ningún cliente con el DNI ingresado.');
+    }
   }
 
-  // Filtrar por categoría
-  if (this.selectedCategoria !== 0) {
-    productosFiltrados = productosFiltrados.filter(producto =>
-      producto.id_categoria === this.selectedCategoria
-    );
-  }
+
+  // Filtrar productos por nombre y categoría seleccionada
+  applyFilters(): void {
+    let productosFiltrados = this.productos;
+
+    // Filtrar por nombre
+    if (this.nombreBusqueda.trim()) {
+      productosFiltrados = productosFiltrados.filter(producto =>
+        producto.nombre.toLowerCase().includes(this.nombreBusqueda.toLowerCase())
+      );
+    }
+
+    // Filtrar por categoría
+    if (this.selectedCategoria !== 0) {
+      productosFiltrados = productosFiltrados.filter(producto =>
+        producto.id_categoria === this.selectedCategoria
+      );
+    }
 
 
-  // Actualizar la lista de productos filtrados
-  this.productosFiltrados = productosFiltrados;
+    // Actualizar la lista de productos filtrados
+    this.productosFiltrados = productosFiltrados;
 
   }
 
@@ -187,7 +193,7 @@ applyFilters(): void {
 
   // Método para seleccionar un producto en el carrito
   seleccionarProductoCarrito(index: number): void {
-    console.log("FILA SELECCIONADA:"+index);
+    console.log("FILA SELECCIONADA:" + index);
     this.productoSeleccionadoIndex = index;
   }
 
@@ -202,38 +208,140 @@ applyFilters(): void {
 
   procesarPago(): void {
     const total = this.getTotalCarrito();
+    if (this.carrito.length === 0) {
+      alert('El carrito está vacío. Agrega productos antes de procesar el pago.');
+      return;
+    }
+
+    if (this.clienteSeleccionado?.id == null) {
+      alert('Busque cliente.');
+      return;
+    }
+
     if (this.montoPago < total) {
       alert('El monto de pago es insuficiente.');
     } else {
       // Aquí puedes agregar la lógica para completar el pago
       alert('Pago procesado correctamente.');
+
+      // Crear la venta
+      const venta = {
+        precio_total: total,
+        id_cliente: this.clienteSeleccionado ? this.clienteSeleccionado.id : 0, // Usar 0 o algún valor predeterminado si es undefined
+        fecha_registro: this.fechaActual,
+        id_usuario: 1, // Suponiendo que el id del usuario es 1
+        estado: '1'
+      };
+
+      this.ventaService.createVenta(venta).subscribe(
+        (response) => {
+          const idVenta = response.id; // Asumimos que el backend devuelve el id_venta
+
+          this.carrito.forEach(item => {
+            const detalleVentaModel = {
+              cant_prod: item.cantidad,
+              importe: item.total,
+              estado: '1',
+              id_venta: idVenta || 0, // id_venta de la venta creada
+              id_producto: item.producto.id,
+            };
+
+            // Guardar el detalle de la venta
+            this.detalleventaService.createDetalleVenta(detalleVentaModel).subscribe(
+              () => {
+                console.log('Detalle de venta guardado');
+                // Actualizar el stock del producto en el inventario en el backend
+                const stockUpdate = {
+                  id: item.producto.id,
+                  nombre: item.producto.nombre,
+                  precio: item.producto.precio,
+                  stock: item.producto.stock,
+                  estado: item.producto.estado,
+                  id_categoria: item.producto.id_categoria,
+                };
+                this.productoService.updateProducto(stockUpdate).subscribe(
+                  () => {
+                    console.log('Stock actualizado en el backend');
+                  },
+                  (error) => {
+                    console.error('Error al actualizar el stock en el backend', error);
+                    alert('Hubo un error al actualizar el stock del producto.');
+                  }
+                  );
+              },
+              (error) => {
+                console.error('Error al guardar detalle de venta', error);
+                alert('Hubo un error al guardar los detalles de la venta.');
+              }
+            );
+          });
+
+          alert('Pago procesado correctamente.');
+          //this.resetCarrito(); // Limpiar el carrito después del pago
+        },
+        (error) => {
+          console.error('Error al procesar la venta:', error);
+          alert('Ocurrió un error al procesar el pago.');
+        }
+      );
     }
+
+
+
+
+
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   // Método para eliminar el producto seleccionado en el carrito
   eliminarProducto(): void {
     if (this.productoSeleccionadoIndex === null) return; // No hacer nada si no hay producto seleccionado
-    
-    
-      if (!confirm('¿Estás seguro de eliminar este producto del carrito?')) {
-        return; // Si el usuario cancela la acción, no eliminar
-      }
-    
-      const productoEliminado = this.carrito[this.productoSeleccionadoIndex];
-      const productoInventario = this.productos.find(p => p.id === productoEliminado.producto.id);
-      
-      // Restaurar el stock del producto en inventario
-      if (productoInventario) {
-        productoInventario.stock += productoEliminado.cantidad;
-      }
-    
-      // Eliminar el producto del carrito
-      this.carrito.splice(this.productoSeleccionadoIndex, 1);
-    
-      // Resetear la selección
-      this.productoSeleccionadoIndex = null;
-      }
-    
-      
-    
+
+
+    if (!confirm('¿Estás seguro de eliminar este producto del carrito?')) {
+      return; // Si el usuario cancela la acción, no eliminar
+    }
+
+    const productoEliminado = this.carrito[this.productoSeleccionadoIndex];
+    const productoInventario = this.productos.find(p => p.id === productoEliminado.producto.id);
+
+    // Restaurar el stock del producto en inventario
+    if (productoInventario) {
+      productoInventario.stock += productoEliminado.cantidad;
+    }
+
+    // Eliminar el producto del carrito
+    this.carrito.splice(this.productoSeleccionadoIndex, 1);
+
+    // Resetear la selección
+    this.productoSeleccionadoIndex = null;
+  }
+
+
+
 }

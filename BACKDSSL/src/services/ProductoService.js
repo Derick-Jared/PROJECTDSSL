@@ -32,5 +32,10 @@ class ProductoService{
         }
         return productobycategoria;
     }
+
+    async updateProducto(id, productoData) {
+        await productoRepository.update(id, productoData);
+        return productoRepository.findById(id);
+      }
 }
 module.exports=new ProductoService();

@@ -262,12 +262,11 @@
                     (change)="onCategoriaChange($event)"
                   >
                     <option value="0">Todas las categorías</option>
-                    <option
-                      *ngFor="let categoria of categorias"
-                      [value]="categoria.id"
-                    >
-                      {{ categoria.nombre }}
-                    </option>
+                    <ng-container *ngFor="let categoria of categorias">
+                      <option *ngIf="categoria.estado === '1'" [value]="categoria.id">
+                        {{ categoria.nombre }}
+                      </option>
+                    </ng-container>
                   </select>
                   <!--  
               <label class="me-2">CANTIDAD:</label>
