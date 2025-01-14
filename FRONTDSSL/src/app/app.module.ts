@@ -13,6 +13,7 @@ import { GestioncategoriaComponent } from './components/gestioncategoria/gestion
 import { CategoriaFormComponent } from './components/gestioncategoria/categoria-form/categoria-form.component';
 import { GestionventasComponent } from './components/gestionventas/gestionventas.component';
 
+
 // import { Categoria } from './models/CategoriaModel';
 
 @NgModule({
@@ -22,7 +23,7 @@ import { GestionventasComponent } from './components/gestionventas/gestionventas
     ClienteFormComponent,
     GestioncategoriaComponent,
     CategoriaFormComponent,
-    GestionventasComponent
+    GestionventasComponent,
   ],
   imports: [
     BrowserModule,
