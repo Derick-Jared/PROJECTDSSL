@@ -16,5 +16,9 @@ class UsuarioService{
     deleteUser(id){
         return usuarioRepository.delete(id);
     }
+
+    restoreUser(id){
+        return usuarioRepository.restore(id);
+    }
 }
 module.exports=new UsuarioService();
