@@ -37,4 +37,13 @@ router.delete('/:id',async(req,res)=>{
         res.status(404).json({message:'TipoUsuario dont delete'});
     }
 });
+
+router.put('/restore/:id',async(req,res)=>{
+    const restoredCategoria=await tipoUsuarioService.restoreTipoUser(req.params.id);
+    if(restoredCategoria){
+        res.status(204).send();
+    }else{
+        res.status(404).json({message:'Categoria dont restore'});
+    }
+});
 module.exports=router;

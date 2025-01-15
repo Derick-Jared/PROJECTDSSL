@@ -16,5 +16,9 @@ class TipoUsuarioService{
     deleteTipoUser(id){
         return tipoUsuarioRepository.delete(id);
     }
+
+    restoreTipoUser(id){
+        return tipoUsuarioRepository.restore(id);
+    }
 }
 module.exports=new TipoUsuarioService();
