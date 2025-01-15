@@ -15,6 +15,9 @@ import { GestionventasComponent } from './components/gestionventas/gestionventas
 import { LoginComponent } from './components/login/login.component';
 import { GestionusuarioComponent } from './components/gestionusuario/gestionusuario.component';
 import { IndexComponent } from './components/index/index.component';
+import { UsuarioFormComponent } from './components/gestionusuario/usuario-form/usuario-form.component';
+import { TipoUsuarioComponent } from './components/tipo-usuario/tipo-usuario.component';
+import { TipoUsuarioFormComponent } from './components/tipo-usuario/tipo-usuario-form/tipo-usuario-form.component';
 
 
 // import { Categoria } from './models/CategoriaModel';
@@ -30,7 +33,10 @@ import { IndexComponent } from './components/index/index.component';
     LoginComponent,
     GestionusuarioComponent,
 
-    IndexComponent
+    IndexComponent,
+      UsuarioFormComponent,
+      TipoUsuarioComponent,
+      TipoUsuarioFormComponent
 
   ],
   imports: [

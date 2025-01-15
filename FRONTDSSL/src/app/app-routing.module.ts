@@ -7,6 +7,7 @@ import { GestioncategoriaComponent } from "./components/gestioncategoria/gestion
 import { LoginComponent } from './components/login/login.component';
 import { GestionusuarioComponent } from './components/gestionusuario/gestionusuario.component';
 import { IndexComponent } from './components/index/index.component';
+import { TipoUsuarioComponent } from './components/tipo-usuario/tipo-usuario.component';
 
 const routes: Routes = [
     {path:'gestionregistro',component:GestionregistroComponent},
@@ -15,6 +16,7 @@ const routes: Routes = [
     {path:'gestionusuario',component:GestionusuarioComponent},
     {path:'login',component:LoginComponent},
     {path:'index',component:IndexComponent},
+    {path:'tipo_usuario',component:TipoUsuarioComponent},
     {path:'',redirectTo:'/index',pathMatch:'full'}
 ];
 
