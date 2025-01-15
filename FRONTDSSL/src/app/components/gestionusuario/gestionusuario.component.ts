@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Persona } from 'src/app/models/PersonaModel';
 import { Usuario } from 'src/app/models/UsuarioModel';
 import { TipoUsuario } from 'src/app/models/TipoUsuarioModel';
@@ -6,6 +7,9 @@ import { PersonaService } from 'src/app/services/persona.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { TipoUsuarioService } from 'src/app/services/tipo-usuario.service';
 import { AlertifyService } from 'src/app/core/alertify.service';
+import { UsuarioFormComponent } from 'src/app/components/gestionusuario/usuario-form/usuario-form.component';
+
+
 
 @Component({
   selector: 'app-gestionusuario',
@@ -13,16 +17,21 @@ import { AlertifyService } from 'src/app/core/alertify.service';
   styleUrls: ['./gestionusuario.component.css']
 })
 export class GestionusuarioComponent implements OnInit {
+  @ViewChild('usuarioModal') usuarioModal?: UsuarioFormComponent;
   usuarios: Usuario[] = [];
   tipoUsuarios: TipoUsuario[] = [];
   personas: Persona[] = [];
   usuariosCombinados: any[] = []; // Nuevo array para almacenar los datos combinados
   usuariosCombinados2: any[] = [];
+  currentUserId?: number;
+  editMode: boolean = false;
+
+
   constructor(
     private usuarioService: UsuarioService,
     private personaService: PersonaService,
     private tipoUsuarioService: TipoUsuarioService,
-    private alertify: AlertifyService
+    private alertify: AlertifyService, private modalService: NgbModal
   ) { }
 
   ngOnInit(): void {
@@ -118,6 +127,13 @@ export class GestionusuarioComponent implements OnInit {
   }
 
   openModalUsuario(usercombined?: any) {
+    const modalRef = this.modalService.open(UsuarioFormComponent);
+      if (usercombined) {
+        modalRef.componentInstance.usuario = usercombined;
+        modalRef.componentInstance.isEditMode = true;
+    }
+
+
 
   }
 
