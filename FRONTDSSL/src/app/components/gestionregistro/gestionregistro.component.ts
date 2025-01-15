@@ -5,14 +5,14 @@ import { TipoUsuario } from 'src/app/models/TipoUsuarioModel';
 import { Persona } from 'src/app/models/PersonaModel';
 import { PersonaService } from 'src/app/services/persona.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ClienteFormComponent } from '../gestionregistro/cliente-form/cliente-form.component'
+import { ClienteFormComponent } from '../gestionregistro/cliente-form/cliente-form.component';
 import { Router } from '@angular/router';
 import { AlertifyService } from 'src/app/core/alertify.service';
 
 @Component({
   selector: 'app-gestionregistro',
   templateUrl: './gestionregistro.component.html',
-  styleUrls: ['./gestionregistro.component.css']
+  styleUrls: ['./gestionregistro.component.css'],
 })
 export class GestionregistroComponent implements OnInit {
   @ViewChild('clienteModal') clienteModal?: ClienteFormComponent;
@@ -21,7 +21,13 @@ export class GestionregistroComponent implements OnInit {
   clientes: any[] = [];
   currentUserId?: number;
   editMode: boolean = false;
-  constructor(private personaService: PersonaService, private fb: FormBuilder, private modalService: NgbModal, private router: Router, private alertify: AlertifyService) {
+  constructor(
+    private personaService: PersonaService,
+    private fb: FormBuilder,
+    private modalService: NgbModal,
+    private router: Router,
+    private alertify: AlertifyService
+  ) {
     this.clienteForm = this.fb.group({
       id: [''],
       dni: [''],
@@ -29,8 +35,8 @@ export class GestionregistroComponent implements OnInit {
       apellidos: [''],
       direccion: [''],
       telefono: [''],
-      email: ['']
-    })
+      email: [''],
+    });
   }
 
   ngOnInit(): void {
@@ -38,20 +44,20 @@ export class GestionregistroComponent implements OnInit {
     this.loadClientes();
   }
 
-
   loadClientes(): void {
-    this.personaService.getPersons().subscribe( //subscribe:PARA RESPUESTAS ASINCRONAS
+    this.personaService.getPersons().subscribe(
+      //subscribe:PARA RESPUESTAS ASINCRONAS
       (response) => {
         this.clientes = response;
-        console.log(response)
+        console.log(response);
       },
-      (error) => console.error("error en el loading", error)
-    )
+      (error) => console.error('error en el loading', error)
+    );
   }
 
   openModalCliente(persona?: Persona) {
     const modalRef = this.modalService.open(ClienteFormComponent);
-    console.log(persona)
+    console.log(persona);
     if (persona) {
       modalRef.componentInstance.cliente = persona;
       modalRef.componentInstance.isEditMode = true;
@@ -68,7 +74,7 @@ export class GestionregistroComponent implements OnInit {
             error: (err) => {
               console.error('Error al actualizar cliente:', err);
               this.alertify.error('Ocurrió un error al actualizar el cliente.');
-            }
+            },
           });
         } else {
           this.personaService.createPerson(result).subscribe({
@@ -79,15 +85,13 @@ export class GestionregistroComponent implements OnInit {
             error: (err) => {
               console.error('Error al agregar cliente:', err);
               this.alertify.error('Ocurrió un error al agregar el cliente.');
-            }
+            },
           });
         }
         this.clienteForm.reset();
       }
-
-    })
+    });
   }
-
 
   resetForm() {
     this.clienteForm.reset();
@@ -95,43 +99,42 @@ export class GestionregistroComponent implements OnInit {
 
   deleteCliente(id: number) {
     this.alertify.confirm2(
-      "¿Estás seguro de que deseas eliminar este cliente?",
+      '¿Estás seguro de que deseas eliminar este cliente?',
       () => {
         this.personaService.deletePerson(id).subscribe(() => {
           this.loadClientes();
           this.alertify.error('¡Cliente Eliminado!');
-        })
+        });
       },
       () => {
         // Acción a realizar si se cancela
-        console.log("Acción cancelada");
+        console.log('Acción cancelada');
       },
       {
-        okText: "Sí",
-        cancelText: "Cancelar",
-        title: "Eliminar Cliente"
+        okText: 'Sí',
+        cancelText: 'Cancelar',
+        title: 'Eliminar Cliente',
       }
     );
-
   }
 
   restoreCliente(id: number) {
     this.alertify.confirm2(
-      "¿Estas seguro de habilitar el registro?",
+      '¿Estas seguro de habilitar el registro?',
       () => {
         this.personaService.restoreCliente(id).subscribe(() => {
           this.loadClientes();
           this.alertify.success('¡Cliente Habilitado!');
-        })
+        });
       },
       () => {
         // Acción a realizar si se cancela
-        console.log("Acción cancelada");
+        console.log('Acción cancelada');
       },
       {
-        okText: "Sí",
-        cancelText: "Cancelar",
-        title: "Habilitar Cliente"
+        okText: 'Sí',
+        cancelText: 'Cancelar',
+        title: 'Habilitar Cliente',
       }
     );
   }

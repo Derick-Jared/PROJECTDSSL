@@ -5,6 +5,8 @@ import { Categoria } from 'src/app/models/CategoriaModel';
 
 import { CategoriaproductoService } from 'src/app/services/categoriaproducto.service';
 import { CategoriaFormComponent } from '../gestioncategoria/categoria-form/categoria-form.component'
+import { Router } from '@angular/router';
+import { AlertifyService } from 'src/app/core/alertify.service';
 
 
 @Component({
@@ -20,7 +22,7 @@ export class GestioncategoriaComponent implements OnInit {
   editMode: boolean = false;
   activeTab: string = 'categorias';
 
-  constructor(private categoriaproductoService :CategoriaproductoService , private fb: FormBuilder, private modalService: NgbModal){
+  constructor(private categoriaproductoService :CategoriaproductoService , private fb: FormBuilder, private modalService: NgbModal, private router: Router, private alertify: AlertifyService){
     this.categoriaForm = this.fb.group({
       id: [''],
       nombre: [''],
@@ -39,70 +41,90 @@ export class GestioncategoriaComponent implements OnInit {
     )
   }
 
-  openModalCategoria(cliente?: Categoria) {
+  openModalCategoria(categoria?: Categoria) {
       const modalRef = this.modalService.open(CategoriaFormComponent);
-      if (cliente) {
-        modalRef.componentInstance.categoria = cliente;
+      console.log(categoria);
+      if (categoria) {
+        modalRef.componentInstance.categoria = categoria;
         modalRef.componentInstance.isEditMode = true;
       }
   
       modalRef.result.then((result) => {
         if (result) {
           if (result.id) {
-            this.categoriaproductoService.updateCategoria(result.id, result).subscribe(() => {
-              this.loadCategorias()
+            this.categoriaproductoService.updateCategoria(result.id, result).subscribe({
+              next: () => {
+                this.loadCategorias(); // this.loadPersons()
+                this.alertify.success('¡Categoria Actualizado!');
+              },
+              error: (err) => {
+                console.error('Error al actualizar cliente:', err);
+                this.alertify.error('Ocurrió un error al actualizar la categoria.');
+              },
             });
           } else {
-            this.categoriaproductoService.createCategoria(result).subscribe(() => {
-              this.loadCategorias();
+            this.categoriaproductoService.createCategoria(result).subscribe({
+              next: () => {
+                this.loadCategorias(); // this.loadPersons()
+                this.alertify.success('¡Categoria Agregado!');
+              },
+              error: (err) => {
+                console.error('Error al agregar cliente:', err);
+                this.alertify.error('Ocurrió un error al agregar la categoria..');
+              },
             });
           }
+          this.categoriaForm.reset();
         }
-  
-      })
+      });
     }
   
-    onSubmit() {
-      console.log("onSubmit", this.categoriaForm.value);
-      if (this.editMode && this.currentUserId) {
-        console.log("Entro aca?");
-        this.categoriaproductoService.updateCategoria(this.currentUserId, this.categoriaForm.value).subscribe(() => {
-          this.loadCategorias()
-          this.resetForm();
-        })
-      } else {
-        this.categoriaproductoService.createCategoria(this.categoriaForm.value).subscribe(() => {
-          this.loadCategorias();
-          this.resetForm();
-        })
-      }
-    }
+    
   
   
     resetForm() {
       this.categoriaForm.reset();
     }
   
-    deleteCategoria(id:number){
-      const confirmacion = confirm("¿Estas seguro de eliminar el registro?");
-      if (confirmacion) {
-        this.categoriaproductoService.deleteCategoria(id).subscribe(() => {
-          this.loadCategorias();
-        })
-      }
-    }
-
-    setActiveTab(tab: string) {
-      this.activeTab = tab;
+    deleteCategoria(id: number) {
+      this.alertify.confirm2(
+        '¿Estás seguro de que deseas eliminar esta categoria?',
+        () => {
+          this.categoriaproductoService.deleteCategoria(id).subscribe(() => {
+            this.loadCategorias();
+            this.alertify.error('¡Categoria Eliminado!');
+          });
+        },
+        () => {
+          // Acción a realizar si se cancela
+          console.log('Acción cancelada');
+        },
+        {
+          okText: 'Sí',
+          cancelText: 'Cancelar',
+          title: 'Eliminar Categoria',
+        }
+      );
     }
 
     restoreCategoria(id: number) {
-      const categoria = this.categorias.find(c => c.id === id);
-      const confirmacion = confirm("¿Estas seguro de habilitar el registro?");
-      if (confirmacion) {
-        this.categoriaproductoService.restoreCategoria(id).subscribe(() => {
-          this.loadCategorias();
-        })
-      }
+      this.alertify.confirm2(
+        '¿Estas seguro de habilitar el registro?',
+        () => {
+          this.categoriaproductoService.restoreCategoria(id).subscribe(() => {
+            this.loadCategorias();
+            this.alertify.success('¡Categoria Habilitado!');
+          });
+        },
+        () => {
+          // Acción a realizar si se cancela
+          console.log('Acción cancelada');
+        },
+        {
+          okText: 'Sí',
+          cancelText: 'Cancelar',
+          title: 'Habilitar Categoria',
+        }
+      );
     }
 }
