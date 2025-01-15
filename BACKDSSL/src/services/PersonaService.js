@@ -24,5 +24,8 @@ class PersonaService{
         return personaRepository.findAllStaff();
     }
         */
+    restoreCliente(id){
+        return personaRepository.restore(id);
+    }
 }
 module.exports=new PersonaService();

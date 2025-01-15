@@ -48,4 +48,13 @@ router.delete('/:id',async(req,res)=>{
     }
 });
 
+router.put('/restore/:id',async(req,res)=>{
+    const restoredCategoria=await personaService.restoreCliente(req.params.id);
+    if(restoredCategoria){
+        res.status(204).send();
+    }else{
+        res.status(404).json({message:'Categoria dont restore'});
+    }
+});
+
 module.exports=router;
