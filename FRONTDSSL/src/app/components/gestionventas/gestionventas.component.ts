@@ -31,15 +31,13 @@ export class GestionventasComponent {
   productoSeleccionadoIndex: number | null = null;  // Índice del producto seleccionado en el carrito
   montoPago: number = 0;
   fechaActual: string;
-
-<<<<<<< HEAD
-  constructor(private productoService: ProductoService, private categoriaService: CategoriaproductoService, private personaService: PersonaService,
-=======
   currentDate: string = new Date().toLocaleString();
 
-  constructor(private productoService: ProductoService, private categoriaService: CategoriaService, private personaService: PersonaService,
->>>>>>> Leslie
-    private ventaService: VentaService, private detalleventaService: DetalleventaService) {
+  constructor(private productoService: ProductoService, private categoriaService: CategoriaproductoService, private personaService: PersonaService,private ventaService: VentaService, private detalleventaService: DetalleventaService) {
+
+  
+
+
     const hoy = new Date();
     // Obtener la fecha en formato 'YYYY-MM-DD'
     const año = hoy.getFullYear();

@@ -29,10 +29,9 @@ import { IndexComponent } from './components/index/index.component';
     GestionventasComponent,
     LoginComponent,
     GestionusuarioComponent,
-<<<<<<< HEAD
+
     IndexComponent
-=======
->>>>>>> Leslie
+
   ],
   imports: [
     BrowserModule,
