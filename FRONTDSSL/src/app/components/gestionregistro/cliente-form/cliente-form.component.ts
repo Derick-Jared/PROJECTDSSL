@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Persona } from'src/app/models/PersonaModel';
+import { AlertifyService } from 'src/app/core/alertify.service';
 
 @Component({
   selector: 'app-cliente-form',
@@ -15,6 +16,7 @@ export class ClienteFormComponent implements OnInit {
   cliente: Persona | undefined;
   isEditMode =false;
   ngOnInit(): void {
+    console.log(this.clienteForm.value);
     this.clienteForm = this.fb.group({
       id: [this.cliente?.id],
       dni: [this.cliente?.dni || '', [Validators.required]],
@@ -26,22 +28,20 @@ export class ClienteFormComponent implements OnInit {
     })
   }
 
-  constructor(private fb: FormBuilder, public activeModal: NgbActiveModal) {
+  constructor(private fb: FormBuilder, public activeModal: NgbActiveModal, private alertify: AlertifyService ) {
     this.clienteForm = this.fb.group({
         dni: [''],
         nombres: [''],
         apellidos: [''],
         direccion: [''],
         telefono: [''],
-        email: ['']
+        email: [''],
     })
   }
 
   onSubmit() {
-    console.log("viene");
     this.submited = true;
     if(this.clienteForm.valid){
-      console.log("luego entra");
       this.activeModal.close(this.clienteForm.value);
     }
   }

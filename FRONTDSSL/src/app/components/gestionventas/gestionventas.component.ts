@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Categoria } from 'src/app/models/CategoriaModel';
 import { Persona } from 'src/app/models/PersonaModel';
 import { Producto } from 'src/app/models/ProductoModel';
-import { CategoriaService } from 'src/app/services/categoria.service';
+import { CategoriaproductoService } from 'src/app/services/categoriaproducto.service';
 import { PersonaService } from 'src/app/services/persona.service';
 import { ProductoService } from 'src/app/services/producto.service';
 import jsPDF from 'jspdf';
@@ -32,7 +32,7 @@ export class GestionventasComponent {
   montoPago: number = 0;
   fechaActual: string;
 
-  constructor(private productoService: ProductoService, private categoriaService: CategoriaService, private personaService: PersonaService,
+  constructor(private productoService: ProductoService, private categoriaService: CategoriaproductoService, private personaService: PersonaService,
     private ventaService: VentaService, private detalleventaService: DetalleventaService) {
     const hoy = new Date();
     // Obtener la fecha en formato 'YYYY-MM-DD'
@@ -57,7 +57,7 @@ export class GestionventasComponent {
   }
 
   loadCategories() {
-    this.categoriaService.getCategories().subscribe( //subscribe:PARA RESPUESTAS ASINCRONAS
+    this.categoriaService.getCategorias().subscribe( //subscribe:PARA RESPUESTAS ASINCRONAS
       (response) => this.categorias = response,
       (error) => console.error("error en el loading product", error)
     )

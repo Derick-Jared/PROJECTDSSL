@@ -21,6 +21,7 @@ export class PersonaService {
   }
 
   createPerson(persona: Persona): Observable<Persona> {
+    persona.estado = "1";
     return this.http.post<Persona>(this.apiUrl, persona);
   }
 
@@ -38,5 +39,9 @@ export class PersonaService {
 
   getStaff(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/personal`);
+  }
+
+  restoreCliente(id: number): Observable<any> {
+    return this.http.put(`${this.apiUrl}/restore/${id}`, {});
   }
 }
