@@ -8,12 +8,16 @@ import { LoginComponent } from './components/login/login.component';
 import { GestionusuarioComponent } from './components/gestionusuario/gestionusuario.component';
 import { IndexComponent } from './components/index/index.component';
 import { TipoUsuarioComponent } from './components/tipo-usuario/tipo-usuario.component';
+import { GestioninventarioComponent } from './components/gestioninventario/gestioninventario.component';
+import { GestionreporteComponent } from './components/gestionreporte/gestionreporte.component';
 
 const routes: Routes = [
     {path:'gestionregistro',component:GestionregistroComponent},
     {path:'gestioncategoria', component: GestioncategoriaComponent },
     {path:'gestionventas',component:GestionventasComponent}, //NOMBRE A LLAMAR EN LA URL
     {path:'gestionusuario',component:GestionusuarioComponent},
+    {path:'gestioninventario',component:GestioninventarioComponent},
+    {path:'gestionreporte',component:GestionreporteComponent},
     {path:'login',component:LoginComponent},
     {path:'index',component:IndexComponent},
     {path:'tipo_usuario',component:TipoUsuarioComponent},

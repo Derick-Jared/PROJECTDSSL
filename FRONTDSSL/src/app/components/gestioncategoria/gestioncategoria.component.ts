@@ -20,7 +20,6 @@ export class GestioncategoriaComponent implements OnInit {
   categoriaForm: FormGroup;
   currentUserId?: number;
   editMode: boolean = false;
-  activeTab: string = 'categorias';
 
   constructor(private categoriaproductoService :CategoriaproductoService , private fb: FormBuilder, private modalService: NgbModal, private router: Router, private alertify: AlertifyService){
     this.categoriaForm = this.fb.group({

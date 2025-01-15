@@ -263,7 +263,7 @@ export class GestionventasComponent {
                   estado: item.producto.estado,
                   id_categoria: item.producto.id_categoria,
                 };
-                this.productoService.updateProducto(stockUpdate).subscribe(
+                this.productoService.updateProducto1(stockUpdate).subscribe(
                   () => {
                     console.log('Stock actualizado en el backend');
                   },

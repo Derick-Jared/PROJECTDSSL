@@ -20,7 +20,23 @@ export class ProductoService {
     return this.http.get<Producto[]>(url);
   }
 
-  updateProducto(model: Producto): Observable<Producto> {
+  createProducto(model: Producto): Observable<Producto> {
+        return this.http.post<Producto>(this.apiUrl, model);
+  }
+
+  updateProducto1(model: Producto): Observable<Producto> {
     return this.http.put<Producto>(`${this.apiUrl}/${model.id}`, model);
+  }
+
+  updateProducto(id: number, model: Producto): Observable<Producto> {
+    return this.http.put<Producto>(`${this.apiUrl}/${id}`, model);
+}
+
+  deleteProducto(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${id}`);
+  }
+
+  restoreProducto(id: number): Observable<any> {
+    return this.http.put(`${this.apiUrl}/restore/${id}`, {});
   }
 }

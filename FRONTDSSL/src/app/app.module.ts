@@ -18,6 +18,9 @@ import { IndexComponent } from './components/index/index.component';
 import { UsuarioFormComponent } from './components/gestionusuario/usuario-form/usuario-form.component';
 import { TipoUsuarioComponent } from './components/tipo-usuario/tipo-usuario.component';
 import { TipoUsuarioFormComponent } from './components/tipo-usuario/tipo-usuario-form/tipo-usuario-form.component';
+import { GestioninventarioComponent } from './components/gestioninventario/gestioninventario.component';
+import { ProductoFormComponent } from './components/gestioninventario/producto-form/producto-form.component';
+import { GestionreporteComponent } from './components/gestionreporte/gestionreporte.component';
 
 
 // import { Categoria } from './models/CategoriaModel';
@@ -36,7 +39,10 @@ import { TipoUsuarioFormComponent } from './components/tipo-usuario/tipo-usuario
     IndexComponent,
       UsuarioFormComponent,
       TipoUsuarioComponent,
-      TipoUsuarioFormComponent
+      TipoUsuarioFormComponent,
+      GestioninventarioComponent,
+      ProductoFormComponent,
+      GestionreporteComponent
 
   ],
   imports: [

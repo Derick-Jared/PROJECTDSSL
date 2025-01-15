@@ -54,4 +54,13 @@ router.get('/categoria/:categoriaId',async(req,res)=>{
         }
     }
 });
+
+router.put('/restore/:id',async(req,res)=>{
+    const restoredProducto=await productoService.restoreProducto(req.params.id);
+    if(restoredProducto){
+        res.status(204).send();
+    }else{
+        res.status(404).json({message:'Producto dont restore'});
+    }
+});
 module.exports=router;
