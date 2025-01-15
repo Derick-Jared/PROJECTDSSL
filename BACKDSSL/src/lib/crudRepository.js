@@ -48,7 +48,7 @@ class CrudRepository {
 
     async findAllClients() {
         const [result] = await pool.query(`SELECT p.id,p.nombres,p.apellidos,p.direccion,p.telefono,p.email FROM persona p
-            INNER JOIN usuario u ON p.id = u.id_persona
+            LEFT JOIN usuario u ON p.id = u.id_persona
             WHERE u.id IS NULL`);
         return result;
     }
