@@ -26,7 +26,7 @@ import { GestionusuarioComponent } from './components/gestionusuario/gestionusua
     CategoriaFormComponent,
     GestionventasComponent,
     LoginComponent,
-    GestionusuarioComponent
+    GestionusuarioComponent,
   ],
   imports: [
     BrowserModule,

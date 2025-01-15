@@ -32,6 +32,8 @@ export class GestionventasComponent {
   montoPago: number = 0;
   fechaActual: string;
 
+  currentDate: string = new Date().toLocaleString();
+
   constructor(private productoService: ProductoService, private categoriaService: CategoriaService, private personaService: PersonaService,
     private ventaService: VentaService, private detalleventaService: DetalleventaService) {
     const hoy = new Date();
@@ -267,7 +269,7 @@ export class GestionventasComponent {
                     console.error('Error al actualizar el stock en el backend', error);
                     alert('Hubo un error al actualizar el stock del producto.');
                   }
-                  );
+                );
               },
               (error) => {
                 console.error('Error al guardar detalle de venta', error);
@@ -276,7 +278,8 @@ export class GestionventasComponent {
             );
           });
 
-          alert('Pago procesado correctamente.');
+          // Generar el ticket PDF
+          this.generarBoletaPDF(idVenta, total);
           //this.resetCarrito(); // Limpiar el carrito después del pago
         },
         (error) => {
@@ -292,30 +295,78 @@ export class GestionventasComponent {
 
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  generarBoletaPDF(idVenta: number | undefined, total: number): void {
+    // Crear el documento con tamaño personalizado
+    const doc = new jsPDF('p', 'mm', [80, 200]); // 'p' para orientación vertical, tamaño personalizado [ancho, alto]
+  
+    // Título del ticket
+    doc.setFont("Times", "bold");
+    doc.setFontSize(14);
+    doc.text('MINIMARKET J Y K', 40, 10, { align: 'center' });
+  
+    // Información de la venta
+    doc.setFontSize(10);
+    doc.text(`RUC: `, 40, 15, { align: 'center' });
+    doc.text(`Direccion: `, 40, 20, { align: 'center' });
+    doc.text(`Telefono: `, 40, 25, { align: 'center' });
+    doc.text(`BOLETA DE VENTA ELECTRONICA `, 40, 30, { align: 'center' });
+    doc.text(`BOLETA N°: ${idVenta || 0}`, 40, 35, { align: 'center' });
+    doc.text(`Fecha: ${this.fechaActual}`, 40, 40, { align: 'center' });
+    
+  
+    // Información del cliente
+    doc.setFontSize(8);
+    doc.text(`Cliente: ${this.clienteSeleccionado?.nombres}`, 5, 45);
+    doc.text(`DNI: ${this.clienteSeleccionado?.dni}`, 5, 50);
+  
+    // Línea separadora
+    doc.setLineWidth(0.5);
+    doc.line(5, 55, 75, 55); // Ajustar la línea según el nuevo tamaño
+  
+    // Cabecera de la tabla de productos
+    doc.setFont("Times", "bold");
+    doc.setFontSize(10);
+    doc.setTextColor(255, 255, 255);  // Color de texto blanco
+    doc.setFillColor(133, 193, 233);  // Color de fondo (similar al Java)
+    doc.rect(5, 56, 70, 13, 'F'); // Fondo de la celda
+    
+    doc.text('Producto', 7 , 65);
+    doc.text('Cantidad', 35, 65);
+    doc.text('Precio', 70, 65, { align: 'right' });
+  
+    // Línea debajo de la cabecera
+    doc.setLineWidth(0.5);
+    doc.line(5, 70, 75, 70);
+  
+    // Detalles de los productos
+    let yPosition = 75;
+    this.carrito.forEach(item => {
+      doc.setTextColor(0, 0, 0);  // Texto negro
+      doc.text(item.producto.nombre, 7, yPosition);
+      doc.text(`${item.cantidad}`, 35, yPosition);
+      doc.text(`$${item.total.toFixed(2)}`, 70, yPosition, { align: 'right' });
+      yPosition += 5;
+    });
+  
+    // Línea separadora entre la tabla de productos y el total
+    doc.setLineWidth(0.5);
+    doc.line(5, yPosition, 75, yPosition);
+  
+    // Total
+    doc.setFontSize(10);
+    yPosition += 10;
+    doc.text(`Total: $${total.toFixed(2)}`, 5, yPosition);
+  
+    // Pie de la boleta
+    yPosition += 10;
+    doc.setFontSize(8);
+    doc.text('¡Gracias por su compra!', 40, yPosition, { align: 'center' });
+  
+    // Abrir el PDF en una nueva pestaña
+    const pdfData = doc.output('blob');
+    const pdfUrl = URL.createObjectURL(pdfData);
+    window.open(pdfUrl, '_blank');
+  }
 
 
   // Método para eliminar el producto seleccionado en el carrito
