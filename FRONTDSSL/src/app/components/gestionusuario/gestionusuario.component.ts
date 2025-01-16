@@ -8,7 +8,7 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 import { TipoUsuarioService } from 'src/app/services/tipo-usuario.service';
 import { AlertifyService } from 'src/app/core/alertify.service';
 import { UsuarioFormComponent } from 'src/app/components/gestionusuario/usuario-form/usuario-form.component';
-
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 
 @Component({
@@ -18,21 +18,51 @@ import { UsuarioFormComponent } from 'src/app/components/gestionusuario/usuario-
 })
 export class GestionusuarioComponent implements OnInit {
   @ViewChild('usuarioModal') usuarioModal?: UsuarioFormComponent;
+  personaForm!: FormGroup;
   usuarios: Usuario[] = [];
   tipoUsuarios: TipoUsuario[] = [];
   personas: Persona[] = [];
+  persona: Persona | undefined;
   usuariosCombinados: any[] = []; // Nuevo array para almacenar los datos combinados
   usuariosCombinados2: any[] = [];
   currentUserId?: number;
   editMode: boolean = false;
+
+  user: any = {
+    username:'',
+    password:'',
+    estado:'',
+    id_tipousuario:'',
+    id_persona:'',
+  };
+
+  persona2: any = {
+    dni:'',
+    nombres:'',
+    apellidos:'',
+    direccion:'',
+    telefono:'',
+    email:'',
+    estado:'',
+  }
 
 
   constructor(
     private usuarioService: UsuarioService,
     private personaService: PersonaService,
     private tipoUsuarioService: TipoUsuarioService,
-    private alertify: AlertifyService, private modalService: NgbModal
-  ) { }
+    private alertify: AlertifyService, private modalService: NgbModal, private fb: FormBuilder
+  ) { 
+    this.personaForm = this.fb.group({
+      dni: [''],
+      nombres: [''],
+      apellidos: [''],
+      direccion: [''],
+      email: [''],
+      telefono: [''],
+      password: ['']
+    })
+  }
 
   ngOnInit(): void {
     this.loadUsuarios();
@@ -98,6 +128,7 @@ export class GestionusuarioComponent implements OnInit {
       });
     }
 
+    //console.log(this.usuariosCombinados);
   }
 
   combineData2(): void {
@@ -114,6 +145,7 @@ export class GestionusuarioComponent implements OnInit {
 
         return {
           ...usuario, // Agrega los datos del usuario
+          idperson: persona?.id ?? 'Sin Dni',
           dni: persona?.dni ?? 'Sin Dni',
           nombres: persona?.nombres ?? 'Sin Nombres',
           apellidos: persona?.apellidos ?? 'Sin Apellidos',
@@ -129,11 +161,65 @@ export class GestionusuarioComponent implements OnInit {
   openModalUsuario(usercombined?: any) {
     const modalRef = this.modalService.open(UsuarioFormComponent);
       if (usercombined) {
-        modalRef.componentInstance.usuario = usercombined;
+        modalRef.componentInstance.user = usercombined;
         modalRef.componentInstance.isEditMode = true;
     }
 
+    modalRef.result.then((result) => {
+     
+      this.user.username=result.username;
+      this.user.password=result.password;
+      this.user.estado='1';
+      this.user.id_tipousuario=result.id_tipousuario;
+      this.user.id_persona=parseInt(result.id_persona);
 
+      
+      this.persona2.dni=result.dni;
+      this.persona2.nombres=result.nombres;
+      this.persona2.apellidos=result.apellidos;
+      this.persona2.direccion=result.direccion;
+      this.persona2.telefono=result.telefono;
+      this.persona2.email=result.email;
+      this.persona2.estado='1';
+
+      if (result) {
+        if (result.id) {
+          this.user.id=result.id;
+          this.persona2.id=result.id_persona;
+          this.usuarioService.updateUser(this.user.id,this.user).subscribe({
+            next: () => {
+              this.personaService.updatePerson(this.persona2.id,this.persona2).subscribe(() => {
+                this.loadUsuarios();
+                this.loadPersons();
+                this.loadTipoUsuarios();
+                this.alertify.success('¡Usuario Actualizado!');
+                console.log(this.user);
+              })
+            },
+            error: (err) => {
+              console.error('Error al actualizar cliente:', err);
+              this.alertify.error('Ocurrió un error al actualizar el cliente.');
+            }
+          })
+        } else {
+          this.usuarioService.createUser(this.user).subscribe({
+            next: () => {
+              this.personaService.createPerson(this.persona2).subscribe(() => {
+                this.loadUsuarios();
+                this.loadPersons();
+                this.loadTipoUsuarios();
+                this.alertify.success('¡Usuario Creado!');
+              })
+            },
+            error: (err) => {
+              console.error('Error al actualizar cliente:', err);
+              this.alertify.error('Ocurrió un error al Crear el Usuario.');
+            }
+          })
+        }
+        this.resetForm();
+      }
+    })
 
   }
 
@@ -198,5 +284,9 @@ export class GestionusuarioComponent implements OnInit {
     });
 
 
+  }
+
+  resetForm() {
+    this.personaForm.reset();
   }
 }
