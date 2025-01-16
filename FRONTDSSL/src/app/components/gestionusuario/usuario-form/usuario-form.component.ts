@@ -19,12 +19,15 @@ export class UsuarioFormComponent implements OnInit {
   personaForm!: FormGroup;
   userForm!: FormGroup;
   submited = false;
-  user: Usuario | undefined;
+  user: any = {
+    id_tipousuario:'1'
+  };
   persona: Persona | undefined;
   isEditMode = false;
   tipoUsuarios: any []=[];
+  selectedCategoria: number = 0;
 
-  constructor(private personaService: PersonaService, private fb: FormBuilder, private tipoUsuarioService: TipoUsuarioService) {
+  constructor(private personaService: PersonaService, private fb: FormBuilder, private tipoUsuarioService: TipoUsuarioService, public activeModal: NgbActiveModal) {
     this.personaForm = this.fb.group({
       dni: [''],
       nombres: [''],
@@ -44,15 +47,17 @@ export class UsuarioFormComponent implements OnInit {
   ngOnInit(): void {
     this.loadTipoUsuario();
     this.personaForm = this.fb.group({
-      // tipo_documento: [this.persona?.tipo_documento || '', Validators.required],
-      // cedula: [this.persona?.cedula || '', [Validators.required]],
-      // nombres: [this.persona?.nombres || '',],
-      // apellidos: [this.persona?.apellidos || '',],
-      // razon_social: [this.persona?.razon_social || '',],
-      // email: [this.persona?.email || '', [Validators.required]],
-      // direccion: [this.persona?.direccion || ''],
-      // telefono: [this.persona?.telefono || ''],
-      // password: [this.user?.password || '', [Validators.required]]
+      id: [this.user?.id],
+      dni: [this.user?.dni || '', [Validators.required]],
+      nombres: [this.user?.nombres || '',],
+      apellidos: [this.user?.apellidos || '',],
+      email: [this.user?.email || '', [Validators.required]],
+      direccion: [this.user?.direccion || ''],
+      telefono: [this.user?.telefono || ''],
+      password: [this.user?.password || '', [Validators.required]],
+      username: [this.user?.username || '', [Validators.required]],
+      id_tipousuario: [this.user?.id_tipousuario || '', [Validators.required]],
+      id_persona: [this.user?.id_persona || '']
     })
   }
 
@@ -74,7 +79,16 @@ export class UsuarioFormComponent implements OnInit {
   
 
   onSubmit(){
+    this.submited = true;
+    
+      this.activeModal.close(this.personaForm.value);
     
   }
 
+  onCategoriaChange(event: Event): void {
+    const target = event.target as HTMLSelectElement;
+    const selectedCategoriaId = Number(target.value);
+    this.selectedCategoria = selectedCategoriaId;
+    // Aplicar ambos filtros (nombre y categoría)
+  }
 }
