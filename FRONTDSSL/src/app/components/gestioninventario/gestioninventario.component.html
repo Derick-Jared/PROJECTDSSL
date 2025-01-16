@@ -364,13 +364,13 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <ng-container *ngFor="let producto of productos">
-                    <tr *ngIf="producto.estado === '1'">
+                  <ng-container >
+                    <tr *ngFor="let producto of productosCombinados">
                       <td>{{ producto.id }}</td>
                       <td>{{ producto.nombre }}</td>
                       <td>{{ producto.precio }}</td>
                       <td>{{ producto.stock }}</td>
-                      <td></td>
+                      <td>{{ producto.categoriaNombre }}</td>
                       <td>
                         <button
                           type="button"
@@ -436,13 +436,13 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <ng-container *ngFor="let producto of productos">
-                    <tr *ngIf="producto.estado === '0'">
+                  <ng-container >
+                    <tr *ngFor="let producto of productosCombinados2">
                         <td>{{ producto.id }}</td>
                         <td>{{ producto.nombre }}</td>
                         <td>{{ producto.precio }}</td>
                         <td>{{ producto.stock }}</td>
-                        <td></td>
+                        <td>{{ getCategoriaNombre(producto.id_categoria) }}</td>
                       <td>
                         <button
                           type="button"

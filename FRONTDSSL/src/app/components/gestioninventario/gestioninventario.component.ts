@@ -6,6 +6,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
 import { AlertifyService } from 'src/app/core/alertify.service';
+import { CategoriaproductoService } from 'src/app/services/categoriaproducto.service';
+import { Categoria } from 'src/app/models/CategoriaModel';
 
 @Component({
   selector: 'app-gestioninventario',
@@ -15,8 +17,11 @@ import { AlertifyService } from 'src/app/core/alertify.service';
 export class GestioninventarioComponent implements OnInit{
   @ViewChild('productoModal') productoModal?: ProductoFormComponent;
   productos:Producto[]=[];
+  categorias:Categoria[]=[];
   productoForm:FormGroup;
-  constructor(private productoService: ProductoService,private fb: FormBuilder, private modalService: NgbModal, private router: Router, private alertify: AlertifyService){
+  productosCombinados: any[] = []; 
+  productosCombinados2: any[] = []; 
+  constructor(private productoService: ProductoService,private categoriaService:CategoriaproductoService,private fb: FormBuilder, private modalService: NgbModal, private router: Router, private alertify: AlertifyService){
     this.productoForm = this.fb.group({
       id: [''],
       nombre: [''],
@@ -28,13 +33,18 @@ export class GestioninventarioComponent implements OnInit{
 
   ngOnInit(): void {
     this.loadProductos();
+    this.loadCategories();
   } 
 
   loadProductos(){
     this.productoService.getProducts().subscribe(
-      (response) => this.productos = response,
-      (error) => console.error("Error al cargar las categorias", error)
-    )
+      (response) => {
+        this.productos = response;
+        this.combineData(); // Combina los datos después de cargar los usuarios
+        this.combineData2();
+      },
+      (error) => console.error("error en el loading", error)
+    );
   }
 
   openModalProducto(producto?: Producto) {
@@ -120,4 +130,57 @@ export class GestioninventarioComponent implements OnInit{
       }
     );
   }
+
+  loadCategories() {
+    this.categoriaService.getCategorias().subscribe( //subscribe:PARA RESPUESTAS ASINCRONAS
+      (response) => {
+        this.categorias = response;
+        this.combineData(); // Combina los datos después de cargar los tipos de usuario
+        this.combineData2();
+      },
+      (error) => console.error("error en el loading", error)
+    );
+  }
+
+  getCategoriaNombre(id_categoria: number): string {
+    const cat = this.categorias.find(c => c.id === id_categoria);
+    return cat ? cat.nombre : 'Sin Categoria';
+  }
+
+  combineData(): void {
+    if (this.productos.length > 0 && this.categorias.length > 0 ) {
+      this.productosCombinados = this.productos.filter(producto => {
+        const categoria = this.categorias.find(c => c.id === producto.id_categoria);
+        // Verifica si los tres registros tienen estado "0"
+        return producto.estado === '1' && categoria?.estado === '1';
+      }).map(producto => {
+        const categoria = this.categorias.find(c => c.id === producto.id_categoria);
+
+        return {
+          ...producto, // Agrega los datos del usuario
+          categoriaNombre: categoria?.nombre ?? 'Sin Categoria',
+        };
+      });
+    }
+
+  }
+
+  combineData2(): void {
+    if (this.productos.length > 0 && this.categorias.length > 0 ) {
+      this.productosCombinados2 = this.productos.filter(producto => {
+        const categoria = this.categorias.find(c => c.id === producto.id_categoria);
+
+        // Verifica si los tres registros tienen estado "0"
+        return producto.estado === '0' && categoria?.estado === '1' ;
+      }).map(producto => {
+        const categoria = this.categorias.find(c => c.id === producto.id_categoria);
+
+        return {
+          ...producto, // Agrega los datos del usuario
+          categoriaNombre: producto?.nombre ?? 'Sin Categoria',
+        };
+      });
+    }
+  }
+    
 }

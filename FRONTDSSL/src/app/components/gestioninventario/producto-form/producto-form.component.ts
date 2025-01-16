@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Producto } from 'src/app/models/ProductoModel';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { CategoriaproductoService } from 'src/app/services/categoriaproducto.service';
+import { Categoria } from 'src/app/models/CategoriaModel';
 
 @Component({
   selector: 'app-producto-form',
@@ -11,25 +13,31 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 export class ProductoFormComponent implements OnInit {
   productoForm!: FormGroup;
   submited = false;
-  producto: Producto | undefined;
+  producto: any={
+    id_categoria:'1'
+  }
   isEditMode = false;
+  categorias:Categoria[]=[];
 
   ngOnInit(): void {
+    this.loadCategories();
     this.productoForm = this.fb.group({
       id: [this.producto?.id],
       nombre: [this.producto?.nombre || '', Validators.required],
       precio: [this.producto?.precio || '', Validators.required],
       stock: [this.producto?.stock || '', Validators.required],
       estado: '1',
-      id_categoria: 1,
+      id_categoria: [this.producto?.id_categoria || '', Validators.required]
     });
   }
 
-  constructor(private fb: FormBuilder, public activeModal: NgbActiveModal) {
+  constructor(private categoriaService: CategoriaproductoService ,private fb: FormBuilder, public activeModal: NgbActiveModal) {
     this.productoForm = this.fb.group({
       nombre: [''],
       precio: [''],
       stock: [''],
+      estado: '1',
+      id_categoria: ['']
     });
   }
 
@@ -40,5 +48,12 @@ export class ProductoFormComponent implements OnInit {
       console.log("luego entra");
       this.activeModal.close(this.productoForm.value);
     }
+  }
+
+  loadCategories() {
+    this.categoriaService.getCategorias().subscribe( //subscribe:PARA RESPUESTAS ASINCRONAS
+      (response) => this.categorias = response,
+      (error) => console.error("error en el loading product", error)
+    )
   }
 }

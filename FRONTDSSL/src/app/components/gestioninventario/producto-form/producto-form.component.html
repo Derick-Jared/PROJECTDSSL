@@ -26,8 +26,11 @@
             </div>
             <div class="col">
                 <label for="id_categoria" class="form-label">CATEGORIA</label>
-                <input type="text" class="form-control" id="id_categoria" 
-                formControlName="id_categoria">
+                <select class="form-select me-2" style="width: 200px;" id="id_categoria" formControlName="id_categoria">
+                <ng-container *ngFor="let categoria of categorias">
+                    <option *ngIf="categoria.estado === '1'" [value]="categoria.id">{{ categoria.nombre }}</option>
+                </ng-container>
+                </select>
             </div>
         </div>
         <div class="modal-footer">
