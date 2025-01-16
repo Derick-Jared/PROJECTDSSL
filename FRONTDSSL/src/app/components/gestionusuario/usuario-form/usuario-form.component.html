@@ -1,36 +1,35 @@
 <div class="modal-header">
-    <h4> Registro de Cliente</h4>
+    <h4> Registro de Usuario</h4>
     <!-- <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss()"></button> -->
     <button type="button" class="btn-close" aria-label="Close"></button>
 </div>
 
 <div class="modal-body">
-    <!-- <form [formGroup]="usuarioForm" (ngSubmit)="onSubmit()"> -->
-    <form>
+    <form [formGroup]="personaForm" (ngSubmit)="onSubmit()"> 
         <div class="row">
             <div class="col">
-                <label for="nombres" class="form-label">NOMBRES</label>
+                <label for="nombres" class="form-label">DNI</label>
                 <input type="text" class="form-control" id="nombres" 
                 formControlName="nombres">
             </div>
             <div class="col">
-                <label for="apellidos" class="form-label">APELLIDOS</label>
+                <label for="apellidos" class="form-label">TELEFONO</label>
                 <input type="text" class="form-control" id="apellidos" 
-                formControlName="apellidos">
+                formControlName="telefono">
             </div>
         </div>
 
         <div class="row">
             <div class="col">
-                <label for="dni" class="form-label">DNI</label>
+                <label for="dni" class="form-label">NOMBRE</label>
                 <input type="text" class="form-control" id="dni" 
                 formControlName="dni">
             </div>
 
             <div class="col">
-                <label for="telefono" class="form-label">TELEFONO</label>
+                <label for="telefono" class="form-label">APELLIDOS</label>
                 <input type="text" class="form-control" id="telefono" 
-                formControlName="telefono">
+                formControlName="apellidos">
             </div>
         </div>
 
@@ -47,6 +46,31 @@
                 <label for="email" class="form-label">EMAIL</label>
                 <input type="text" class="form-control" id="email" 
                 formControlName="email">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <label for="email" class="form-label">USUARIO</label>
+                <input type="text" class="form-control" id="email" 
+                formControlName="username">
+            </div>
+
+            <div class="col">
+                <label for="email" class="form-label">CONTRASE;A</label>
+                <input type="text" class="form-control" id="email" 
+                formControlName="password">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <label for="email" class="form-label">TIPO USUARIO</label>
+                <select>
+                <ng-container *ngFor="let tipo_usuario of tipoUsuarios">
+                    <option [value]="tipo_usuario.id">{{ tipo_usuario.nombre }}</option>
+                </ng-container>
+                </select>
             </div>
         </div>
 

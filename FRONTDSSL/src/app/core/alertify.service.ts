@@ -57,4 +57,8 @@ export class AlertifyService {
   message(message: string) {
     alertify.message(message);
   }
+
+  alert(message: string, title: string = 'Alert', callback?: () => void): void {
+    alertify.alert(title, message, callback || (() => {}));
+  }
 }
