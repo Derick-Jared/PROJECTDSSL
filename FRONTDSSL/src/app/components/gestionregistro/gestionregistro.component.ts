@@ -40,7 +40,7 @@ export class GestionregistroComponent implements OnInit {
 
 
   loadClientes(): void {
-    this.personaService.getPersons().subscribe( //subscribe:PARA RESPUESTAS ASINCRONAS
+    this.personaService.getClients().subscribe( //subscribe:PARA RESPUESTAS ASINCRONAS
       (response) => {
         this.clientes = response;
         console.log(response)
