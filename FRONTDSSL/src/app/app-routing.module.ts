@@ -21,7 +21,7 @@ const routes: Routes = [
     {path:'login',component:LoginComponent},
     {path:'index',component:IndexComponent},
     {path:'tipo_usuario',component:TipoUsuarioComponent},
-    {path:'',redirectTo:'/index',pathMatch:'full'}
+    {path:'',redirectTo:'/login',pathMatch:'full'}
 ];
 
 @NgModule({
