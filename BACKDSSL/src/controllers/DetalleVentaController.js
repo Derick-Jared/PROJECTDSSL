@@ -1,10 +1,19 @@
 const express = require('express');
-const detalleventaService=require('../services/DetalleventaService');
+const detalleventaService=require('../services/DetalleVentaService');
 const router=express.Router();
 
 router.get('/',async(req,res)=>{
     const detalleventas=await detalleventaService.getAllDetalleVentas();
     res.json(detalleventas);
+});
+
+router.get('/venta/:idVenta/',async(req,res)=>{
+    const detalleventa=await detalleventaService.getDetalleVentaByIdVenta(req.params.idVenta);
+    if(detalleventa){
+        res.json(detalleventa);
+    }else{
+        res.status(404).json({message:'Detalleventa no found'});
+    }
 });
 
 router.get('/:id/',async(req,res)=>{
@@ -15,6 +24,8 @@ router.get('/:id/',async(req,res)=>{
         res.status(404).json({message:'Detalleventa no found'});
     }
 });
+
+
 
 router.post('/',async(req,res)=>{
     const newDetalleventa=await detalleventaService.createDetalleVenta(req.body);

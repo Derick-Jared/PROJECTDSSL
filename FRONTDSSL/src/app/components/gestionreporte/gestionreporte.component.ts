@@ -1,8 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import { AlertifyService } from 'src/app/core/alertify.service';
+import { DetalleVenta } from 'src/app/models/DetalleVentaModel';
 import { Persona } from 'src/app/models/PersonaModel';
+import { Producto } from 'src/app/models/ProductoModel';
 import { Usuario } from 'src/app/models/UsuarioModel';
 import { Venta } from 'src/app/models/VentaModel';
+import { DetalleventaService } from 'src/app/services/detalleventa.service';
 import { PersonaService } from 'src/app/services/persona.service';
+import { ProductoService } from 'src/app/services/producto.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { VentaService } from 'src/app/services/venta.service';
 
@@ -16,12 +21,17 @@ export class GestionreporteComponent implements OnInit {
   usuarios: Usuario[] = [];
   clientes: Persona[] = [];
   personas: Persona[] = [];
+  detalles:DetalleVenta[]=[];
+  productos: Producto[] = [];
   ventasCombinadas: any[] = [];
-  usuariosCombinados: any[] = [];
+  detallesCombinados: any[] = [];
   constructor(
     private ventaService: VentaService,
     private personaService: PersonaService,
-    private usuarioService: UsuarioService
+    private usuarioService: UsuarioService,
+    private detalleventaService: DetalleventaService,
+    private productoService: ProductoService,
+    private alertify: AlertifyService
   ) { }
 
   ngOnInit(): void {
@@ -69,7 +79,6 @@ export class GestionreporteComponent implements OnInit {
       (response) => {
         this.personas = response;
         this.combineData(); // Combina los datos después de cargar las personas
-        //this.combineData2();
       },
       (error) => console.error("error en el loading", error)
     );
@@ -99,4 +108,5 @@ export class GestionreporteComponent implements OnInit {
     // Imprime las ventas combinadas para verificar el resultado
     console.log('Ventas Combinadas:', this.ventasCombinadas);
   }
+
 }
