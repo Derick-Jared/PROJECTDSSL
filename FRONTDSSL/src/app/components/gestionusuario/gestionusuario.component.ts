@@ -282,8 +282,6 @@ export class GestionusuarioComponent implements OnInit {
     this.alertify.alert(message, title, () => {
       this.alertify.message('Detalles visualizados.');
     });
-
-
   }
 
   resetForm() {
