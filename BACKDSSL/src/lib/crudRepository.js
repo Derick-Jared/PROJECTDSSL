@@ -60,5 +60,10 @@ class CrudRepository {
         return result;
     }
         */
+
+    async findByUsername(id) {
+        const [rows] = await pool.query(`SELECT * FROM usuario WHERE username=?`, [id]);
+        return rows[0];
+    }
 }
 module.exports = CrudRepository;

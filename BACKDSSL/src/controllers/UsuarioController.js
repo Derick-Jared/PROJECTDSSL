@@ -46,4 +46,15 @@ router.put('/restore/:id',async(req,res)=>{
         res.status(404).json({message:'Categoria dont restore'});
     }
 });
+
+router.get('/getusername/:username/',async(req,res)=>{
+    const venta=await usuarioService.getUserByUsername(req.params.username);
+    if(venta){
+        res.json(venta);
+    }else{
+        res.status(404).json({message:'Usuario no found'});
+    }
+});
+
+
 module.exports=router;
