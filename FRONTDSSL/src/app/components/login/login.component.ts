@@ -1,5 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UsuarioService } from 'src/app/services/usuario.service';
+import { Usuario } from 'src/app/models/UsuarioModel'
+import { Router } from '@angular/router';
+import { AlertifyService } from 'src/app/core/alertify.service';
+
+
+
 
 @Component({
   selector: 'app-login',
@@ -8,13 +15,13 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
-
-  constructor(private fb: FormBuilder) {}
+  usuario: Usuario | undefined;
+  constructor(private fb: FormBuilder,private userService : UsuarioService, private router: Router) {}
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
-      password: ['', [Validators.required, Validators.minLength(6)]]
+      password: ['', [Validators.required]]
     });
   }
 
@@ -27,11 +34,20 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if (this.loginForm.valid) {
+    // if (this.loginForm.valid) {
       const formData = this.loginForm.value;
       console.log('Usuario:', formData.username);
       console.log('Contraseña:', formData.password);
-      // Aquí puedes manejar la autenticación (por ejemplo, enviando a un backend)
-    }
+      this.userService.login(formData.username).subscribe(data=>{
+        console.log(data);
+        if(data.password==formData.password){
+          console.log('RAAA CSMR')
+          this.router.navigate(['/index']);
+        }
+       });
+
+       
+    //   // Aquí puedes manejar la autenticación (por ejemplo, enviando a un backend)
+    // }
   }
 }

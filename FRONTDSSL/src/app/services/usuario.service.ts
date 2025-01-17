@@ -32,4 +32,8 @@ export class UsuarioService {
     return this.http.post<Usuario>(this.apiUrl, persona);
   }
 
+  login(username: string): Observable<Usuario>{
+    return this.http.get<Usuario>(this.apiUrl+"/getusername/"+username);
+  }
+
 }
