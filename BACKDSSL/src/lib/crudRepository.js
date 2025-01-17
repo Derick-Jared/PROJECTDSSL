@@ -53,6 +53,12 @@ class CrudRepository {
         return result;
     }
 
+    async findByIdVenta(id) {
+        const [result] = await pool.query(`SELECT * FROM detalle_venta dv 
+            INNER JOIN venta v ON dv.id_venta=v.id WHERE dv.id_venta=?`, [id]);
+        return result;
+    }
+
     /*
     async findAllUsers() {
         const [result] = await pool.query(`SELECT u.id,username,p.id,p.nombres,p.apellidos,p.direccion,p.telefono,p.email FROM usuario u

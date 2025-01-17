@@ -16,5 +16,9 @@ class DetalleventaService{
     deleteDetalleVenta(id){
         return detalleventaRepository.delete(id);
     }
+
+    getDetalleVentaByIdVenta(id){
+        return detalleventaRepository.findByIdVenta(id);
+    }
 }
 module.exports=new DetalleventaService();
