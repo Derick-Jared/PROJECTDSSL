@@ -189,7 +189,7 @@
                         Cuentas
                     </a>
                 </li>
-                <li>
+                <li *ngIf="tipoUsuario === 1">
                     <a routerLink="/tipo_usuario" class="nav-link text-white">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                             class="bi bi-person-vcard-fill" viewBox="0 0 16 16">

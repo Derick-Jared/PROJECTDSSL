@@ -93,7 +93,7 @@
       <hr />
       <ul class="nav nav-pills flex-column mb-auto">
         <li class="nav-item">
-          <a href="#" class="nav-link text-white active">
+          <a routerLink="/gestionventas" class="nav-link text-white active">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="20"
@@ -110,7 +110,7 @@
           </a>
         </li>
 
-        <li>
+        <li *ngIf="tipoUsuario === 1">
           <a routerLink="/gestionregistro" class="nav-link text-white">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -127,7 +127,7 @@
             Cliente
           </a>
         </li>
-        <li>
+        <li *ngIf="tipoUsuario === 1">
           <a routerLink="/gestioncategoria" class="nav-link text-white">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -147,7 +147,7 @@
             Categoria
           </a>
         </li>
-        <li>
+        <li *ngIf="tipoUsuario === 1">
           <a routerLink="/gestioninventario" class="nav-link text-white">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -164,7 +164,7 @@
             Inventario
           </a>
         </li>
-        <li>
+        <li *ngIf="tipoUsuario === 1">
           <a routerLink="/gestionreporte" class="nav-link text-white">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -187,7 +187,7 @@
             Reportes
           </a>
         </li>
-        <li>
+        <li *ngIf="tipoUsuario === 1">
           <a routerLink="/gestionusuario" class="nav-link text-white">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -204,7 +204,7 @@
             Cuentas
           </a>
         </li>
-        <li>
+        <li *ngIf="tipoUsuario === 1">
           <a routerLink="/tipo_usuario" class="nav-link text-white">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                   class="bi bi-person-vcard-fill" viewBox="0 0 16 16">
