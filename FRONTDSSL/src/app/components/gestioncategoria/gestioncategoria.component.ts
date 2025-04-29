@@ -20,7 +20,6 @@ export class GestioncategoriaComponent implements OnInit {
   categoriaForm: FormGroup;
   currentUserId?: number;
   editMode: boolean = false;
-  tipoUsuario: number = 0;
 
   constructor(private categoriaproductoService :CategoriaproductoService , private fb: FormBuilder, private modalService: NgbModal, private router: Router, private alertify: AlertifyService){
     this.categoriaForm = this.fb.group({
@@ -31,10 +30,7 @@ export class GestioncategoriaComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadCategorias();
-    const tipo = localStorage.getItem('tipoUsuario');
-    if (tipo) {
-      this.tipoUsuario = parseInt(tipo, 10);
-    }
+   
   } 
 
 

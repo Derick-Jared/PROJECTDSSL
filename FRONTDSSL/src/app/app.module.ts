@@ -21,6 +21,7 @@ import { TipoUsuarioFormComponent } from './components/tipo-usuario/tipo-usuario
 import { GestioninventarioComponent } from './components/gestioninventario/gestioninventario.component';
 import { ProductoFormComponent } from './components/gestioninventario/producto-form/producto-form.component';
 import { GestionreporteComponent } from './components/gestionreporte/gestionreporte.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 
 // import { Categoria } from './models/CategoriaModel';
@@ -42,7 +43,8 @@ import { GestionreporteComponent } from './components/gestionreporte/gestionrepo
       TipoUsuarioFormComponent,
       GestioninventarioComponent,
       ProductoFormComponent,
-      GestionreporteComponent
+      GestionreporteComponent,
+      NavbarComponent
 
   ],
   imports: [

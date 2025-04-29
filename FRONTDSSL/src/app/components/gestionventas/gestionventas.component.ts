@@ -32,7 +32,6 @@ export class GestionventasComponent {
   fechaActual: string;
   currentDate: string = new Date().toLocaleString();
 
-  tipoUsuario: number = 0;
 
   constructor(
     private productoService: ProductoService,
@@ -54,10 +53,7 @@ export class GestionventasComponent {
     this.loadProducts();
     this.loadCategories();
     this.loadPersons();
-    const tipo = localStorage.getItem('tipoUsuario');
-    if (tipo) {
-      this.tipoUsuario = parseInt(tipo, 10);
-    }
+
   }
 
   loadProducts() {

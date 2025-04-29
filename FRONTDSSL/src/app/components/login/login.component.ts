@@ -46,7 +46,7 @@ export class LoginComponent implements OnInit {
         if (data.id_tipousuario == 1) {
           this.router.navigate(['/index']);
         } else if (data.id_tipousuario == 2) {
-          this.router.navigate(['/gestionventas']);
+          this.router.navigate(['/index']);
         }
       }
     });
